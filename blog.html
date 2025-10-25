@@ -11,10 +11,62 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
-  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/custom.css?v=5">
+  <script>
+    // Theme detection and synchronization
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for existing theme preference
+      const savedTheme = localStorage.getItem('wcTheme');
+      const isDarkMode = savedTheme === '1' || savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      // Apply theme based on preference
+      if (isDarkMode) {
+        document.body.classList.add('dark');
+        document.body.classList.remove('light');
+        if (window.wc) {
+          window.wc.isSiteThemeDark = true;
+        }
+      } else {
+        document.body.classList.remove('dark');
+        document.body.classList.add('light');
+        if (window.wc) {
+          window.wc.isSiteThemeDark = false;
+        }
+      }
+      
+      // Set localStorage if not already set
+      if (!savedTheme) {
+        localStorage.setItem('wcTheme', isDarkMode ? '1' : '0');
+      }
+    });
+
+    // Also run immediately in case DOMContentLoaded has already fired
+    (function() {
+      const savedTheme = localStorage.getItem('wcTheme');
+      const isDarkMode = savedTheme === '1' || savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (isDarkMode) {
+        document.body.classList.add('dark');
+        document.body.classList.remove('light');
+        if (window.wc) {
+          window.wc.isSiteThemeDark = true;
+        }
+      } else {
+        document.body.classList.remove('dark');
+        document.body.classList.add('light');
+        if (window.wc) {
+          window.wc.isSiteThemeDark = false;
+        }
+      }
+      
+      if (!savedTheme) {
+        localStorage.setItem('wcTheme', isDarkMode ? '1' : '0');
+      }
+    })();
+  </script>
 </head>
 
-<body class="dark">
+<body>
   <div class="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar-main">
@@ -47,6 +99,13 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="index.html#contact"><span>Contact</span></a>
+            </li>
+          </ul>
+          <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+            <li class="nav-item theme-toggle">
+              <a href="#" class="nav-link js-set-theme-auto" aria-label="Toggle theme">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+              </a>
             </li>
           </ul>
         </div>
@@ -164,6 +223,112 @@
   <script src="js/wowchemy-init.min.3a6bdbdff5d8a89d6e651adb3deec035.js"></script>
   <script src="js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js"></script>
   <script src="js/wowchemy-publication.9137013a66774049159934c29c3f0205.js"></script>
+  
+  <!-- Electric Spark Effect Script -->
+  <script>
+    // Electric spark effect
+    (function() {
+      let sparkCount = 0;
+      const maxSparks = 50;
+      let lastMouseMove = 0;
+      const mouseMoveThrottle = 50; // milliseconds
+      
+      function createSpark(x, y, isClick = false) {
+        if (sparkCount >= maxSparks) return;
+        
+        sparkCount++;
+        const spark = document.createElement('div');
+        spark.className = isClick ? 'spark-large' : 'spark';
+        
+        // Add some randomness to position
+        const offsetX = (Math.random() - 0.5) * 20;
+        const offsetY = (Math.random() - 0.5) * 20;
+        
+        spark.style.left = (x + offsetX) + 'px';
+        spark.style.top = (y + offsetY) + 'px';
+        
+        document.body.appendChild(spark);
+        
+        // Remove spark after animation
+        setTimeout(() => {
+          if (spark.parentNode) {
+            spark.parentNode.removeChild(spark);
+          }
+          sparkCount--;
+        }, isClick ? 800 : 600);
+      }
+      
+      function createTrail(x, y) {
+        const trail = document.createElement('div');
+        trail.className = 'electric-trail';
+        trail.style.left = x + 'px';
+        trail.style.top = y + 'px';
+        
+        document.body.appendChild(trail);
+        
+        setTimeout(() => {
+          if (trail.parentNode) {
+            trail.parentNode.removeChild(trail);
+          }
+        }, 300);
+      }
+      
+      // Mouse move effect
+      document.addEventListener('mousemove', function(e) {
+        const now = Date.now();
+        if (now - lastMouseMove < mouseMoveThrottle) return;
+        lastMouseMove = now;
+        
+        // Create trail effect
+        if (Math.random() < 0.8) { // 80% chance for trail
+          createTrail(e.clientX, e.clientY);
+        }
+        
+        // Create spark frequently
+        if (Math.random() < 0.4) { // 40% chance for spark
+          createSpark(e.clientX, e.clientY);
+        }
+      });
+      
+      // Mouse click effect
+      document.addEventListener('click', function(e) {
+        // Create multiple sparks on click
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            createSpark(e.clientX, e.clientY, true);
+          }, i * 50);
+        }
+      });
+      
+      // Touch effect for mobile
+      document.addEventListener('touchstart', function(e) {
+        const touch = e.touches[0];
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            createSpark(touch.clientX, touch.clientY, true);
+          }, i * 100);
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Simple theme toggle - just light ↔ dark
+    (function() {
+      const themeButton = document.querySelector('.js-set-theme-auto');
+      if (!themeButton) return;
+      
+      themeButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Toggle between light and dark
+        const isDark = document.body.classList.toggle('dark');
+        
+        // Save preference
+        localStorage.setItem('wcTheme', isDark ? '1' : '0');
+      });
+    })();
+  </script>
 
 </body>
 </html>

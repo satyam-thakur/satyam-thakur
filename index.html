@@ -24,7 +24,7 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous"
     async></script>
   <link rel="stylesheet" href="/css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css" />
-  <link rel="stylesheet" href="/css/custom.css" />
+  <link rel="stylesheet" href="/css/custom.css?v=12" />
   <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5TVT962Q9F"></script>
   <script>
@@ -47,6 +47,39 @@
       });
       console.debug("Outbound link clicked: " + url);
     }
+
+    // Force dark mode as default
+    document.addEventListener('DOMContentLoaded', function() {
+      // Override the theme configuration to default to dark mode
+      if (window.wc) {
+        window.wc.isSiteThemeDark = true;
+      }
+      
+      // Add dark class to body if not already present
+      if (!document.body.classList.contains('dark')) {
+        document.body.classList.add('dark');
+      }
+      
+      // Set localStorage to dark mode if no preference is stored
+      if (!localStorage.getItem('wcTheme')) {
+        localStorage.setItem('wcTheme', '1'); // 1 = dark mode
+      }
+    });
+
+    // Also run immediately in case DOMContentLoaded has already fired
+    (function() {
+      if (window.wc) {
+        window.wc.isSiteThemeDark = true;
+      }
+      
+      if (!document.body.classList.contains('dark')) {
+        document.body.classList.add('dark');
+      }
+      
+      if (!localStorage.getItem('wcTheme')) {
+        localStorage.setItem('wcTheme', '1');
+      }
+    })();
 
     function onClickCallback(event) {
       if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
@@ -169,9 +202,14 @@
             </ul>
           </div>
           <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search"
                   aria-hidden="true"></i></a>
+            </li> -->
+            <li class="nav-item theme-toggle">
+              <a href="#" class="nav-link js-set-theme-auto" aria-label="Toggle theme">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+              </a>
             </li>
           </ul>
         </div>
@@ -810,6 +848,145 @@
 
   <script src="/js/wowchemy-publication.9137013a66774049159934c29c3f0205.js" type="module"></script>
 
+  <!-- Electric Spark Effect Script -->
+  <script>
+    // Electric spark effect
+    (function() {
+      let sparkCount = 0;
+      const maxSparks = 50;
+      let lastMouseMove = 0;
+      const mouseMoveThrottle = 30; // milliseconds
+      let isDragging = false;
+      let dragStartTime = 0;
+      
+         function createSpark(x, y, isClick = false, isDrag = false) {
+           if (sparkCount >= maxSparks) return;
+           
+           sparkCount++;
+           const spark = document.createElement('div');
+           
+           if (isDrag) {
+             spark.className = 'spark-huge';
+           } else if (isClick) {
+             spark.className = 'spark-large';
+           } else {
+             spark.className = 'spark';
+           }
+           
+           // Add some randomness to position
+           const offsetX = (Math.random() - 0.5) * (isDrag ? 40 : 20);
+           const offsetY = (Math.random() - 0.5) * (isDrag ? 40 : 20);
+           
+           // Set random rotation for multi-directional sparks
+           const randomRotation = Math.random() * 360; // 0 to 360 degrees
+           spark.style.setProperty('--spark-rotation', randomRotation + 'deg');
+           
+           spark.style.left = (x + offsetX) + 'px';
+           spark.style.top = (y + offsetY) + 'px';
+           
+           // Create additional lightning segments for jagged effect
+           if (!isDrag && !isClick) {
+             // Add 3 additional lightning segments for small sparks
+             for (let i = 1; i <= 3; i++) {
+               const segment = document.createElement('div');
+               segment.className = `lightning-segment-${i}`;
+               spark.appendChild(segment);
+             }
+           }
+           
+           document.body.appendChild(spark);
+           
+           // Remove spark after animation
+           const duration = isDrag ? 2500 : (isClick ? 1800 : 1200);
+           setTimeout(() => {
+             if (spark.parentNode) {
+               spark.parentNode.removeChild(spark);
+             }
+             sparkCount--;
+           }, duration);
+         }
+      
+      function createTrail(x, y) {
+        const trail = document.createElement('div');
+        trail.className = 'electric-trail';
+        trail.style.left = x + 'px';
+        trail.style.top = y + 'px';
+        
+        document.body.appendChild(trail);
+        
+        setTimeout(() => {
+          if (trail.parentNode) {
+            trail.parentNode.removeChild(trail);
+          }
+        }, 300);
+      }
+      
+      // Mouse move effect
+      document.addEventListener('mousemove', function(e) {
+        const now = Date.now();
+        if (now - lastMouseMove < mouseMoveThrottle) return;
+        lastMouseMove = now;
+        
+        // Detect dragging
+        if (isDragging) {
+          const dragDuration = now - dragStartTime;
+          if (dragDuration > 200) { // After 200ms of dragging
+            // Create huge sparks while dragging
+            if (Math.random() < 0.6) { // 60% chance for huge spark
+              createSpark(e.clientX, e.clientY, false, true);
+            }
+          }
+        }
+        
+        // Create trail effect
+        if (Math.random() < 0.8) { // 80% chance for trail
+          createTrail(e.clientX, e.clientY);
+        }
+        
+        // Create spark frequently
+        if (Math.random() < 0.4) { // 40% chance for spark
+          createSpark(e.clientX, e.clientY);
+        }
+      });
+      
+      // Mouse down - start drag detection
+      document.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        dragStartTime = Date.now();
+      });
+      
+      // Mouse up - stop drag detection
+      document.addEventListener('mouseup', function(e) {
+        isDragging = false;
+        // Create explosion of sparks when drag ends
+        for (let i = 0; i < 8; i++) {
+          setTimeout(() => {
+            createSpark(e.clientX, e.clientY, true);
+          }, i * 30);
+        }
+      });
+      
+      // Mouse click effect
+      document.addEventListener('click', function(e) {
+        // Create multiple sparks on click
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            createSpark(e.clientX, e.clientY, true);
+          }, i * 50);
+        }
+      });
+      
+      // Touch effect for mobile
+      document.addEventListener('touchstart', function(e) {
+        const touch = e.touches[0];
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            createSpark(touch.clientX, touch.clientY, true);
+          }, i * 100);
+        }
+      });
+    })();
+  </script>
 
   <script>
     (function() {
@@ -989,6 +1166,24 @@
       } else {
         loadFeaturedBlogPosts();
       }
+    })();
+  </script>
+
+  <script>
+    // Simple theme toggle - just light ↔ dark
+    (function() {
+      const themeButton = document.querySelector('.js-set-theme-auto');
+      if (!themeButton) return;
+      
+      themeButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Toggle between light and dark
+        const isDark = document.body.classList.toggle('dark');
+        
+        // Save preference
+        localStorage.setItem('wcTheme', isDark ? '1' : '0');
+      });
     })();
   </script>
 
