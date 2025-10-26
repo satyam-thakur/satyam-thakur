@@ -11,6 +11,6 @@ Network Development Engineer | Cloud & Automation Enthusiast
   <!-- <img src="" alt="CCNA" width="80"/> -->
   <img src="/authors/logos/HCIP.png" alt="HCIP" width="80"/>
 
-🔗 [Portfolio](https://satyamthakur.com.np) • [LinkedIn](https://linkedin.com/in/thakur-satyam)
+🔗 [Portfolio](https://satyamthakur.com.np)       🔗 [LinkedIn](https://linkedin.com/in/thakur-satyam)
 
 ---
