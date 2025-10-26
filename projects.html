@@ -372,93 +372,6 @@
   <script src="js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js"></script>
   <script src="js/wowchemy-init.min.3a6bdbdff5d8a89d6e651adb3deec035.js"></script>
   
-  <!-- Electric Spark Effect Script -->
-  <script>
-    // Electric spark effect
-    (function() {
-      let sparkCount = 0;
-      const maxSparks = 50;
-      let lastMouseMove = 0;
-      const mouseMoveThrottle = 50; // milliseconds
-      
-      function createSpark(x, y, isClick = false) {
-        if (sparkCount >= maxSparks) return;
-        
-        sparkCount++;
-        const spark = document.createElement('div');
-        spark.className = isClick ? 'spark-large' : 'spark';
-        
-        // Add some randomness to position
-        const offsetX = (Math.random() - 0.5) * 20;
-        const offsetY = (Math.random() - 0.5) * 20;
-        
-        spark.style.left = (x + offsetX) + 'px';
-        spark.style.top = (y + offsetY) + 'px';
-        
-        document.body.appendChild(spark);
-        
-        // Remove spark after animation
-        setTimeout(() => {
-          if (spark.parentNode) {
-            spark.parentNode.removeChild(spark);
-          }
-          sparkCount--;
-        }, isClick ? 800 : 600);
-      }
-      
-      function createTrail(x, y) {
-        const trail = document.createElement('div');
-        trail.className = 'electric-trail';
-        trail.style.left = x + 'px';
-        trail.style.top = y + 'px';
-        
-        document.body.appendChild(trail);
-        
-        setTimeout(() => {
-          if (trail.parentNode) {
-            trail.parentNode.removeChild(trail);
-          }
-        }, 300);
-      }
-      
-      // Mouse move effect
-      document.addEventListener('mousemove', function(e) {
-        const now = Date.now();
-        if (now - lastMouseMove < mouseMoveThrottle) return;
-        lastMouseMove = now;
-        
-        // Create trail effect
-        if (Math.random() < 0.8) { // 80% chance for trail
-          createTrail(e.clientX, e.clientY);
-        }
-        
-        // Create spark frequently
-        if (Math.random() < 0.4) { // 40% chance for spark
-          createSpark(e.clientX, e.clientY);
-        }
-      });
-      
-      // Mouse click effect
-      document.addEventListener('click', function(e) {
-        // Create multiple sparks on click
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => {
-            createSpark(e.clientX, e.clientY, true);
-          }, i * 50);
-        }
-      });
-      
-      // Touch effect for mobile
-      document.addEventListener('touchstart', function(e) {
-        const touch = e.touches[0];
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => {
-            createSpark(touch.clientX, touch.clientY, true);
-          }, i * 100);
-        }
-      });
-    })();
-  </script>
   
   <script>
   document.querySelectorAll('.project-filters a').forEach(btn => {
@@ -492,8 +405,6 @@
     })();
   </script>
 
-  <!-- Fluid Cursor Effect -->
-  <script src="js/fluid-cursor.js"></script>
 </body>
 </html>
 

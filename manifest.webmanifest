@@ -1,0 +1,16 @@
+{
+  "name": "Satyam Thakur Portfolio",
+  "short_name": "Satyam Portfolio",
+  "description": "Graduate Assistant | Computer Science | Engineer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f17",
+  "theme_color": "#0b0f17",
+  "icons": [
+    {
+      "src": "/authors/admin/canvas.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
