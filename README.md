@@ -15,7 +15,6 @@
 <img src="/authors/logos/HCIP.png" alt="HCIP" width="80"/>
 </p>
 
----
 
 ### 🌐 Connect With Me
 <p align="left">

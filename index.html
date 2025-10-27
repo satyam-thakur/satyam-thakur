@@ -344,6 +344,144 @@
               </div> -->
             </div>
 
+            <!-- Top Skills -->
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="section-subheading text-left mb-3">Skills</div>
+                <div style="position: relative;">
+                  <button onclick="scrollSkills('left')" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s;">
+                    <span style="font-size: 1.2rem; color: rgba(223, 178, 178, 0.9);">&lt;</span>
+                  </button>
+                  <button onclick="scrollSkills('right')" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s;">
+                    <span style="font-size: 1.2rem; color: rgba(223, 178, 178, 0.9);">&gt;</span>
+                  </button>
+                <div class="skills-scroll-container" id="skillsContainer" style="overflow: hidden; width: 100%; padding: 20px 0; scroll-behavior: smooth;">
+                  <div class="skills-scroll" style="display: flex; gap: 2rem; animation: scroll-left 20s linear infinite; white-space: nowrap;">
+                    <!-- Python -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Python</div>
+                    </div>
+                    <!-- Go -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Go</div>
+                    </div>
+                    <!-- Bash -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Bash</div>
+                    </div>
+                    <!-- AWS -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">AWS</div>
+                    </div>
+                    <!-- GCP -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">GCP</div>
+                    </div>
+                    <!-- Docker -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Docker</div>
+                    </div>
+                    <!-- Terraform -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Terraform</div>
+                    </div>
+                    <!-- Ansible -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg" alt="Ansible" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Ansible</div>
+                    </div>
+                    <!-- Git -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Git</div>
+                    </div>
+                    <!-- Linux -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Linux</div>
+                    </div>
+                    
+                    <!-- Duplicate set for seamless loop -->
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Python</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Go</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Bash</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">AWS</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">GCP</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Docker</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Terraform</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg" alt="Ansible" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Ansible</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Git</div>
+                    </div>
+                    <div style="text-align: center; min-width: 80px;">
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" style="width: 50px; height: 50px; margin-bottom: 0.5rem;" />
+                      <div style="font-size: 0.8rem; font-weight: 500;">Linux</div>
+                    </div>
+                  </div>
+                </div>
+                <style>
+                  @keyframes scroll-left {
+                    0% {
+                      transform: translateX(0);
+                    }
+                    100% {
+                      transform: translateX(-50%);
+                    }
+                  }
+                  .skills-scroll-container:hover .skills-scroll {
+                    animation-play-state: paused;
+                  }
+                  button[onclick^="scrollSkills"]:hover {
+                    background: rgba(16, 15, 15, 0.414) !important;
+                  }
+                </style>
+                <script>
+                  function scrollSkills(direction) {
+                    const container = document.getElementById('skillsContainer');
+                    const scrollAmount = 200;
+                    if (direction === 'left') {
+                      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    } else {
+                      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }
+                  }
+                </script>
+              </div>
+              </div>
+            </div>
+
             <!-- Certifications -->
             <div class="row mt-4">
               <div class="col-12">
@@ -353,7 +491,7 @@
                   <!-- AWS SAA -->
                   <div class="col-auto" style="text-align: center;">
                     <a href="https://drive.google.com/file/d/15LkkaenqLBElEPi4JQCHHIdtjDkeduN_/view?usp=sharing" target="_blank" rel="noopener" style="display: block; text-decoration: none;">
-                      <img src="authors/logos/SAA-C03.png" alt="AWS SAA-C03" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
+                      <img src="authors/logos/SAA-C03.png" alt="AWS SAA-C03" style="width: 60px; height: 60px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
                       <div style="font-size: 0.75rem; font-weight: 500;">AWS SAA-C03</div>
                     </a>
                   </div>
@@ -361,7 +499,7 @@
                   <!-- CCNA -->
                   <div class="col-auto" style="text-align: center;">
                     <a href="https://www.linkedin.com/in/thakur-satyam/details/certifications/" target="_blank" rel="noopener" style="display: block; text-decoration: none;">
-                      <img src="authors/logos/CCNA.png" alt="CCNA" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
+                      <img src="authors/logos/CCNA.png" alt="CCNA" style="width: 60px; height: 60px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
                       <div style="font-size: 0.75rem; font-weight: 500;">CCNA</div>
                     </a>
                   </div>
@@ -369,7 +507,7 @@
                   <!-- Fortinet NSE 3 -->
                   <div class="col-auto" style="text-align: center;">
                     <a href="https://www.linkedin.com/in/thakur-satyam/details/certifications/" target="_blank" rel="noopener" style="display: block; text-decoration: none;">
-                      <img src="authors/logos/fortinet_logo.jpg" alt="Fortinet NSE 3" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
+                      <img src="authors/logos/fortinet_logo.jpg" alt="Fortinet NSE 3" style="width: 60px; height: 60px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
                       <div style="font-size: 0.75rem; font-weight: 500;">NSE 3</div>
                     </a>
                   </div>
@@ -377,7 +515,7 @@
                   <!-- HCIP -->
                   <div class="col-auto" style="text-align: center;">
                     <a href="https://drive.google.com/file/d/1ldklpcds4RMG6QyA53BcfZPLH8FWX-y8/view?usp=sharing" target="_blank" rel="noopener" style="display: block; text-decoration: none;">
-                      <img src="authors/logos/HCIP.png" alt="HCIP" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
+                      <img src="authors/logos/HCIP.png" alt="HCIP" style="width: 60px; height: 60px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
                       <div style="font-size: 0.75rem; font-weight: 500;">HCIP R&S</div>
                     </a>
                   </div>
@@ -385,7 +523,7 @@
                   <!-- Linux -->
                   <div class="col-auto" style="text-align: center;">
                     <a href="https://drive.google.com/file/d/14UBlXv7NjONckS08_nC3OLQ6BBKzh0De/view?usp=sharing" target="_blank" rel="noopener" style="display: block; text-decoration: none;">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1200px-Tux.svg.png" alt="Linux" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1200px-Tux.svg.png" alt="Linux" style="width: 60px; height: 60px; object-fit: contain; margin-bottom: 0.3rem; transition: transform 0.3s ease;" >
                       <div style="font-size: 0.75rem; font-weight: 500;">NDG Linux</div>
                     </a>
                   </div>
