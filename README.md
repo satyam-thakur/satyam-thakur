@@ -1,6 +1,6 @@
 <!-- Banner -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=160&section=header&text=Hi, I'm Satyam Thakur 👋&fontSize=40&fontAlignY=35&animation=fadeIn&desc=Network, Cloud, Automation, and AI Enthusiast&descAlignY=55" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=160&section=header&text=Satyam%20Thakur&fontSize=40&fontAlignY=35&animation=fadeIn&desc=Networking%20%7C%20Automation%20%7C%20Cloud%20%7C%20AI&descAlignY=55" />
 </p>
 
 ### 👨‍💻 About Me
@@ -11,7 +11,7 @@
 
 <p align="left">
 <img src="/authors/logos/SAA-C03.png" alt="AWS Solution Architect" width="80"/>
-<img src="" alt="CCNA" width="80"/>
+<!-- <img src="" alt="CCNA" width="80"/> -->
 <img src="/authors/logos/HCIP.png" alt="HCIP" width="80"/>
 </p>
 
