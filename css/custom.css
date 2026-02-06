@@ -48,6 +48,10 @@ p, div, span, a {
   padding-right: 15px;
 }
 
+.container-xl {
+  max-width: 1400px;
+}
+
 /* Light mode styles */
 body:not(.dark) {
   --accent: #f8fafc;
@@ -67,7 +71,17 @@ body{
 }
 a{color:var(--link-primary)}
 .navbar, .page-header{background:transparent !important}
-.btn-primary{background:#111827;border-color:#111827}
+.btn-primary{
+  background:#111827;
+  border-color:#111827;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background:#1f2937;
+  border-color:#1f2937;
+  color: #ffffff;
+}
 
 /* Theme Toggle Switch */
 .theme-toggle {
@@ -150,8 +164,9 @@ a{color:var(--link-primary)}
 
 /* Header (navbar) */
 #navbar-main.navbar{
-  background:rgba(11,15,23,.6) !important;
-  backdrop-filter:saturate(150%) blur(8px);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
 }
 #navbar-main .navbar-brand,
 #navbar-main .nav-link{color:var(--text) !important}
@@ -159,9 +174,9 @@ a{color:var(--link-primary)}
 
 /* Light mode navbar */
 body:not(.dark) #navbar-main.navbar {
-  background: rgba(255, 255, 255, 0.8) !important;
-  backdrop-filter: saturate(150%) blur(8px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
 body:not(.dark) #navbar-main .navbar-brand,
 body:not(.dark) #navbar-main .nav-link {
@@ -172,8 +187,25 @@ body:not(.dark) #navbar-main .nav-link:hover {
 }
 
 /* Hero/About section */
-section#about .home-section-bg{background:linear-gradient(180deg, rgba(17,24,39,.6) 0%, rgba(11,15,23,0) 60%)}
-#profile .avatar{box-shadow:0 10px 30px rgba(0,0,0,.35)}
+section#about .home-section-bg{background:linear-gradient(0deg, #272935 0%, #272935 100%);}
+#profile {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.15) 0%, rgba(15, 23, 42, 0.1) 100%);
+  padding: 2rem;
+  border-radius: 32px;
+  backdrop-filter: blur(10px);
+}
+
+#profile .avatar{
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 28px;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#profile .avatar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 #profile .portrait-title h2{color:#f3f4f6;font-weight:800}
 #profile .portrait-title h3{color:#cbd5e1;font-weight:500}
 .network-icon .big-icon{color:#94a3b8}
@@ -181,14 +213,25 @@ section#about .home-section-bg{background:linear-gradient(180deg, rgba(17,24,39,
 
 /* Light mode hero section */
 body:not(.dark) section#about .home-section-bg {
-  background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #ffffff 100%, #ffffff 100%);
 }
 
 body:not(.dark) section#about {
   background-color: var(--bg);
 }
+body:not(.dark) #profile {
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.6) 0%, rgba(241, 245, 249, 0.4) 100%);
+  padding: 2rem;
+  border-radius: 32px;
+  backdrop-filter: blur(10px);
+}
+
 body:not(.dark) #profile .avatar {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+body:not(.dark) #profile .avatar:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 body:not(.dark) #profile .portrait-title h2 {
   color: var(--text);
@@ -207,12 +250,16 @@ body:not(.dark) .network-icon a:hover .big-icon {
 
 /* Headings */
 .home-section h1{color:#f3f4f6;font-weight:800;letter-spacing:.2px}
+section#about h1 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
 .section-subheading{color:#e5e7eb;font-weight:700}
 
 /* Light mode headings */
 body:not(.dark) .home-section h1 {
   color: var(--text);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: .2px;
 }
 body:not(.dark) .section-subheading {
@@ -541,12 +588,12 @@ body:not(.dark) .blog-card h3 {
 .main-content {
   padding-top: 80px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(135deg, #272935 100%, #272935 100%);;
 }
 
 /* Light mode main content */
 body:not(.dark) .main-content {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
 }
 
 /* Dark mode page headers */
@@ -575,7 +622,7 @@ body:not(.dark) .main-content p {
 
 /* Light mode section backgrounds */
 body:not(.dark) .home-section {
-  background-color: var(--bg);
+  background-color: #ffffff;
 }
 
 body:not(.dark) section {
@@ -592,11 +639,11 @@ body:not(.dark) .wrapper {
 
 /* Light mode specific sections */
 body:not(.dark) #section-about {
-  background-color: var(--bg);
+  background-color:#ffffff;
 }
 
 body:not(.dark) #section-experience {
-  background-color: var(--bg);
+  background-color: #ffffff;
 }
 
 body:not(.dark) #section-projects {
@@ -639,7 +686,7 @@ body:not(.dark) .page-footer {
 .page-footer {
   margin-top: auto;
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
-  padding: 2rem 0;
+  padding: 1rem 0;
   border-top: 1px solid rgba(59, 130, 246, 0.2);
   backdrop-filter: blur(10px);
 }
@@ -725,15 +772,16 @@ body:not(.dark) .page-footer {
 
 /* Navbar fixed styling */
 .navbar.fixed-top {
-  background: rgba(11, 15, 23, 0.95);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
   backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 /* Light mode navbar fixed */
 body:not(.dark) .navbar.fixed-top {
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--card-border);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 /* Project placeholder cards */
