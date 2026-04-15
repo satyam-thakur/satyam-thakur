@@ -69,46 +69,29 @@
 <body>
   <div class="wrapper">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar-main">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">
-          <strong>Satyam Thakur</strong>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarContent">
-          <ul class="navbar-nav d-md-inline-flex">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html"><span>Home</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.html#section-about"><span>About</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.html#section-experience"><span>Experience</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="projects.html"><span>Projects</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="blog.html"><span>Blog</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://drive.google.com/file/d/190fsoxV7mXBh4JW2TdCbTBkio_a8iLYO/view?usp=sharing" target="_blank" rel="noopener"><span>Resume</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.html#contact"><span>Contact</span></a>
-            </li>
-          </ul>
-          <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
-            <li class="nav-item theme-toggle">
-              <a href="#" class="nav-link js-set-theme-auto" aria-label="Toggle theme">
-                <i class="fas fa-moon" aria-hidden="true"></i>
-              </a>
-            </li>
-          </ul>
+    <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar fixed-top" id="navbar-main">
+      <div class="container-xl">
+        <div class="d-none d-lg-inline-flex">
+          <a class="navbar-brand" href="index.html">Satyam Thakur</a>
         </div>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content"
+          aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+          <span><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+          <a class="navbar-brand" href="index.html">Stay with me!</a>
+        </div>
+        <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+          <div id="navbar-links"></div>
+          <script src="js/navbar.js"></script>
+        </div>
+        <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+          <li class="nav-item theme-toggle">
+            <a href="#" class="nav-link js-set-theme-auto" aria-label="Toggle theme">
+              <i class="fas fa-moon" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
       </div>
     </nav>
 

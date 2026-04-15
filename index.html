@@ -177,32 +177,8 @@
             <a class="navbar-brand" href="/">Stay with me!</a>
           </div>
           <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
-            <ul class="navbar-nav d-md-inline-flex">
-              <li class="nav-item">
-                <a class="nav-link active" href="/"><span>Home</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#section-experience"><span>Experience</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="projects.html"><span>Projects</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="blog.html"><span>Blog</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="https://drive.google.com/file/d/1zskfXtsBf8umIZYlWt7eQXDO2aXMF_NF/view?usp=sharing" target="_blank" rel="noopener"><span>Resume</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#section-about"><span>About Me</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#contact"><span>Contact</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link topmate-link" href="https://topmate.io/thakursatyam/" target="_blank" rel="noopener"><span style="display:inline-flex;align-items:center;gap:4px">I'm live on <img src="https://topmate.io/cdn-cgi/image/width=384,quality=90/images/common/topmate-light.svg" alt="Topmate!" style="height:19px"></span></a>
-              </li>
-            </ul>
+            <div id="navbar-links"></div>
+            <script src="/js/navbar.js"></script>
           </div>
           <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
             <!-- <li class="nav-item">
@@ -279,15 +255,34 @@
               <p style="text-align: justify;">With years of hands-on experience across ISP/core networks and cloud-scale automation, I bridge traditional IP networking with modern cloud-native and AI/ML infrastructure.</p>
               
               <p style="text-align: justify;"><strong>Recent highlights include:</strong></p>
-              
+
               <ul>
                 <li><strong>Amazon Web Services HPC <u><a href="https://www.linkedin.com/posts/thakur-satyam_amazoninternship-networkdevintern-gratitude-activity-7359771158654672896-YPJv" target="_blank">ML Fabric Network Automation</a></u> (2025):</strong> Delivered an MVP for automated network rack decommissioning, reducing engineers 7+ hrs per rack.</li>
+              </ul>
+              <div id="highlights-more" style="max-height:0;overflow:hidden;transition:max-height 0.6s ease">
+              <ul>
                 <li><strong><u><a href="https://github.com/satyam-thakur/BCRVS" target="_blank">BCRVS</a></u>: Blockchain-Based Voting Research (2025):</strong> Deployed VPC network across 3 AWS regions 9 AZs cloud infrastructure.</li>
                 <li><strong><u><a href="https://github.com/satyam-thakur/AI-Network-Assistant" target="_blank">AI Network Assistant</a></u> (2025):</strong> Integrates Gemini, MCP, pyATS, and Terraform to unify network and cloud automation via natural language.</li>
                 <!-- <li><strong><u><a href="https://github.com/satyam-thakur/LLM-Assisted-Container-Security-Analysis" target="_blank">LLM-Assisted Container Security Analysis</a></u> (2025):</strong> Integrates SAST tools with an LLM to detect CVEs and provide clear, context-rich insights for efficient vulnerability management.</li> -->
                 <li><strong>Axiata IPRAN/IPCore Migration (2024):</strong> Migrated 150+ IPRAN nodes, reducing regional outages.</li>
                 <!-- <li><strong>ISP FTTx Network Deployment (2023):</strong> Improved internet user adoption through nationwide network deployment.</li> -->
               </ul>
+              </div>
+              <a id="highlights-toggle" href="#" style="color:var(--link-primary);font-weight:600;text-decoration:none;font-size:0.9em">
+                <span>More highlights</span> <i class="fas fa-chevron-down ml-1" aria-hidden="true"></i>
+              </a>
+              <script>
+                document.getElementById('highlights-toggle').addEventListener('click',function(e){
+                  e.preventDefault();
+                  var el=document.getElementById('highlights-more');
+                  var icon=this.querySelector('i');
+                  var txt=this.querySelector('span');
+                  var open=el.style.maxHeight!=='0px';
+                  el.style.maxHeight=open?'0px':el.scrollHeight+'px';
+                  icon.className=open?'fas fa-chevron-down ml-1':'fas fa-chevron-up ml-1';
+                  txt.textContent=open?'More highlights':'Show less';
+                });
+              </script>
               
               <!-- <p style="text-align: justify;">I'm passionate about network automation, cloud technologies, and building scalable infrastructure solutions.</p> -->
             </div>
@@ -844,21 +839,45 @@
               <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
                 From my home in Nepal, my networking journey began not in a classroom, but out of curiosity and necessity. Faced with a limited mobile data plan, I explored a neighbor's Wi-Fi with Kali Linux. That initial dive into network security—discovering WPA keys, MITM attacks, and Nmap—was a revelation. An ambitious attempt to dual-boot my system led to data loss, but it ignited a passion that set my career path.
               </p>
-              
-              <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
-                This spark led me to pursue a degree in Electronics and Communication, where I explored everything from building robots with Arduino to full-stack software development. However, my fascination was truly reignited in my undergraduate networking courses, solidifying my focus as I dove deep into CCNA, spending countless hours in Packet Tracer and GNS3. The COVID-19 pandemic was a global catalyst, revealing the network as the critical backbone of modern life. This realization cemented my resolve to not just participate in this field, but to master it.
-              </p>
-              
-              <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
-                This belief fueled a three-and-a-half-year role as a Network Engineer at Huawei, where I evolved from pulling patch cords to architecting and automating large-scale projects impacting millions of users. The journey culminated in a pivotal role as a Network Development Engineer at Amazon Web Services (AWS), where I delivered a high-impact MVP to automate the intricate AWS HPC fabric network—the infrastructure that powers today’s demanding AI/ML workloads.
-              </p>
-              
-              <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
-                I am a passionate Network Development Engineer who sees the bigger picture, bridging traditional networking with modern cloud and AI systems. My approach is not just about configuring devices; it's about architecting holistic, scalable solutions that are technically robust and strategically aligned with business goals. I believe in building sustainable technology that empowers the teams who use it.
-              </p>
-              <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
-                Now pursuing my Master’s in Computer Science with a specialization in Network and Security, I’m using this time to expand my knowledge and explore more possibilities in the domain while deepening my focus on automation and tooling. Based in the USA, I’m enjoying the people, the culture, and the vibrant international community.
-              </p>
+
+              <div id="journey-more" style="max-height:0;overflow:hidden;transition:max-height 0.6s ease">
+                <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
+                  This spark led me to pursue a degree in Electronics and Communication, where I explored everything from building robots with Arduino to full-stack software development. However, my fascination was truly reignited in my undergraduate networking courses, solidifying my focus as I dove deep into CCNA, spending countless hours in Packet Tracer and GNS3. The COVID-19 pandemic was a global catalyst, revealing the network as the critical backbone of modern life. This realization cemented my resolve to not just participate in this field, but to master it.
+                </p>
+
+                <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
+                  This belief fueled a three-and-a-half-year role as a Network Engineer at Huawei, where I evolved from pulling patch cords to architecting and automating large-scale projects impacting millions of users. The journey culminated in a pivotal role as a Network Development Engineer at Amazon Web Services (AWS), where I delivered a high-impact MVP to automate the intricate AWS HPC fabric network—the infrastructure that powers today’s demanding AI/ML workloads.
+                </p>
+
+                <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
+                  I am a passionate Network Development Engineer who sees the bigger picture, bridging traditional networking with modern cloud and AI systems. My approach is not just about configuring devices; it's about architecting holistic, scalable solutions that are technically robust and strategically aligned with business goals. I believe in building sustainable technology that empowers the teams who use it.
+                </p>
+                <p style="text-align: justify; font-size: 1.1em; line-height: 1.8;">
+                  Now pursuing my Master’s in Computer Science with a specialization in Network and Security, I’m using this time to expand my knowledge and explore more possibilities in the domain while deepening my focus on automation and tooling. Based in the USA, I’m enjoying the people, the culture, and the vibrant international community.
+                </p>
+              </div>
+
+              <div class="mt-2">
+                <a id="journey-toggle" href="#" style="color:var(--link-primary);font-weight:600;text-decoration:none">
+                  <span>Read more</span> <i class="fas fa-chevron-down ml-1" aria-hidden="true"></i>
+                </a>
+              </div>
+              <script>
+                (function(){
+                  var btn=document.getElementById('journey-toggle');
+                  if(!btn) return;
+                  btn.onclick=function(e){
+                    e.preventDefault();
+                    var el=document.getElementById('journey-more');
+                    var icon=btn.querySelector('i');
+                    var txt=btn.querySelector('span');
+                    var open=el.style.maxHeight!=='0px';
+                    el.style.maxHeight=open?'0px':el.scrollHeight+'px';
+                    icon.className=open?'fas fa-chevron-down ml-1':'fas fa-chevron-up ml-1';
+                    txt.textContent=open?'Read more':'Show less';
+                  };
+                })();
+              </script>
             </div>
           </div>
         </div>
@@ -885,7 +904,7 @@
               <li>
                 <i class="fa-li fas fa-envelope fa-2x" aria-hidden="true"></i>
                 <span id="person-email">
-                  <a href="mailto:satyamthakur8822@gmail.com">satyamthakur8822@gmail.com</a>
+                  <a href="mailto:satyamthakur8822@gmail.com">Send Mail !</a>
                 </span>
               </li>
               <li>
@@ -902,6 +921,11 @@
                   <a href="https://cal.com/thakursatyam" target="_blank" rel="noopener">
                     Schedule a meeting
                   </a>
+                </span>
+              </li>
+              <li>
+                <span>
+                  <a class="topmate-link" href="https://topmate.io/thakursatyam/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(255,255,255,0.85),rgba(255,255,255,0.65));padding:2px 8px;border-radius:20px;color:#1e293b">I'm live on <img src="https://topmate.io/cdn-cgi/image/width=384,quality=90/images/common/topmate-light.svg" alt="Topmate!" style="height:20px"></a>
                 </span>
               </li>
             </ul>
@@ -1198,6 +1222,7 @@
       });
     })();
   </script>
+
 
 </body>
 
