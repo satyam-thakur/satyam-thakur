@@ -171,6 +171,10 @@ a{color:var(--link-primary)}
 #navbar-main .navbar-brand,
 #navbar-main .nav-link{color:var(--text) !important}
 #navbar-main .nav-link:hover{color:#93c5fd !important}
+.topmate-link{animation:topmate-flash 1.5s ease-in-out infinite}
+.topmate-link span{background:linear-gradient(135deg,rgba(255,255,255,0.85),rgba(255,255,255,0.65));padding:2px 8px;border-radius:20px;color:#1e293b !important}
+body:not(.dark) .topmate-link span{background:linear-gradient(135deg,rgba(248,250,252,0.95),rgba(241,245,249,0.9));color:#1e293b !important}
+@keyframes topmate-flash{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* Light mode navbar */
 body:not(.dark) #navbar-main.navbar {
