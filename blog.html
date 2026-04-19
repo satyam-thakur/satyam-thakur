@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0b0f17">
   <meta name="color-scheme" content="dark">
   <title>Blog | Satyam Thakur</title>
-  <link rel="canonical" href="index.htmlblog.html">
-  <link rel="alternate" hreflang="en" href="index.htmlblog.html">
+  <link rel="canonical" href="blog.html">
+  <link rel="alternate" hreflang="en" href="blog.html">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
@@ -110,66 +110,42 @@
         <!-- Blog Posts -->
         <div class="row">
           <div class="col-12">
-            
-            <!-- AWS Article -->
-            <div class="blog-card">
+            <div id="blog-posts" aria-live="polite"></div>
+
+            <div id="blog-empty-state" class="blog-card" hidden>
               <div class="blog-meta">
-                <i class="far fa-calendar"></i>
-                <span>Apr 2025</span>
-                <span class="separator">•</span>
-                <i class="fab fa-medium"></i>
-                <span>Article</span>
+                <i class="far fa-file-alt"></i>
+                <span>No published posts yet</span>
               </div>
-              <h3>
-                <a href="https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572" target="_blank">AWS Multi-AZ Multi-Region Network Using VPC Peering</a>
-              </h3>
-              <p>
-                A comprehensive guide to deploying a 3-region, 9-node EC2 infrastructure with VPC peering for high availability.
-              </p>
-              <a href="https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572" target="_blank" class="read-more">
-                Read more →
-              </a>
+              <h3>No articles available</h3>
+              <p>Add a markdown file in <code>content/articles</code> and regenerate the index.</p>
             </div>
 
-            <!-- Research Day Poster -->
-            <div class="blog-card">
+            <div id="blog-error-state" class="blog-card" hidden>
               <div class="blog-meta">
-                <i class="far fa-calendar"></i>
-                <span>Apr 2025</span>
-                <span class="separator">•</span>
-                <i class="fas fa-file-alt"></i>
-                <span>Research Poster</span>
+                <i class="fas fa-triangle-exclamation"></i>
+                <span>Could not load articles</span>
               </div>
-              <h3>
-                <a href="https://drive.google.com/file/d/1SWbr2t_4H0YWwt5DklRSQ6I1bYv0O7H1/view" target="_blank">Securing the Future of E-Voting: Blockchain-based System</a>
-              </h3>
-              <p>
-                Research poster showcasing a blockchain-based voting system designed for security, transparency, and democratic integrity.
-              </p>
-              <a href="https://drive.google.com/file/d/1SWbr2t_4H0YWwt5DklRSQ6I1bYv0O7H1/view" target="_blank" class="read-more">
-                View Poster →
-              </a>
+              <h3>Articles are temporarily unavailable</h3>
+              <p>Please refresh this page. If the problem continues, regenerate <code>content/articles/articles-index.json</code>.</p>
             </div>
 
-            <!-- BVED Framework -->
-            <div class="blog-card">
-              <div class="blog-meta">
-                <i class="far fa-calendar"></i>
-                <span>2025</span>
-                <span class="separator">•</span>
-                <i class="fas fa-file-alt"></i>
-                <span>Research Paper</span>
+            <noscript>
+              <div class="blog-card">
+                <div class="blog-meta">
+                  <i class="far fa-calendar"></i>
+                  <span>Apr 2025</span>
+                  <span class="separator">•</span>
+                  <i class="fas fa-file-alt"></i>
+                  <span>Article</span>
+                </div>
+                <h3>
+                  <a href="article.html?file=content%2Farticles%2FAWS-Multi-AZ-Multi-Region-Network.md">AWS Multi-AZ Multi-Region Network Using VPC Peering</a>
+                </h3>
+                <p>A comprehensive guide to deploying a 3-region, 9-node EC2 infrastructure with VPC peering for high availability.</p>
+                <a href="article.html?file=content%2Farticles%2FAWS-Multi-AZ-Multi-Region-Network.md" class="read-more">Read more →</a>
               </div>
-              <h3>
-                <a href="https://drive.google.com/file/d/12lkVTDfGFDJ_i5dJLzQvhuY8I6FuQGok/view?usp=sharing" target="_blank">BVED Framework: Blockchain E-Voting and DevSecOps</a>
-              </h3>
-              <p>
-                Research paper on blockchain-based e-voting systems and DevSecOps framework for containerized applications.
-              </p>
-              <a href="https://drive.google.com/file/d/12lkVTDfGFDJ_i5dJLzQvhuY8I6FuQGok/view?usp=sharing" target="_blank" class="read-more">
-                Read Paper →
-              </a>
-            </div>
+            </noscript>
 
           </div>
         </div>
@@ -206,6 +182,15 @@
   <script src="js/wowchemy-init.min.3a6bdbdff5d8a89d6e651adb3deec035.js"></script>
   <script src="js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js"></script>
   <script src="js/wowchemy-publication.9137013a66774049159934c29c3f0205.js"></script>
+  <script src="js/article-renderer.js?v=1"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.ArticleRenderer) {
+        window.ArticleRenderer.initBlogPage();
+      }
+    });
+  </script>
   
 
   <script>
