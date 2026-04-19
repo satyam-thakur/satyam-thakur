@@ -10,16 +10,10 @@
     "path": "content/articles/AWS-Multi-AZ-Multi-Region-Network.md",
     "html_path": "content/articles/AWS-Multi-AZ-Multi-Region-Network.html",
     "tags": [
-      "AWS",
-      "VPC",
-      "VPC Peering",
-      "EC2",
-      "Cloud Networking",
-      "Multi-Region"
+      "[AWS, VPC, VPC Peering, EC2, Cloud Networking, Multi-Region]"
     ],
     "categories": [
-      "Cloud",
-      "Networking"
+      "[Cloud, Networking]"
     ],
     "draft": false,
     "canonical_url": "https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572"
