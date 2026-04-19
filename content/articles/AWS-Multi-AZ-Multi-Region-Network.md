@@ -5,16 +5,8 @@ lastmod: 2026-04-18
 author: "Satyam Thakur"
 description: "A hands-on walkthrough to deploy a secure and scalable 9-EC2 private network across 3 AWS regions and Availability Zones using custom VPCs and VPC Peering."
 slug: "aws-multi-az-multi-region-network"
-tags:
-	- AWS
-	- VPC
-	- VPC Peering
-	- EC2
-	- Cloud Networking
-	- Multi-Region
-categories:
-	- Cloud
-	- Networking
+tags: [AWS, VPC, VPC Peering, EC2, Cloud Networking, Multi-Region]
+categories: [Cloud, Networking]
 draft: false
 canonical_url: "https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572"
 ---
