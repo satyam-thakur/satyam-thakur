@@ -40,7 +40,7 @@
 - [X] T018 [US2] Add dynamic article list mount container in blog.html
 - [X] T019 [US2] Implement index fetch and card rendering logic in js/article-renderer.js
 - [X] T020 [US2] Replace hardcoded blog card usage with dynamic rendering in blog.html
-- [X] T021 [US2] Generate reader URLs pointing to article.html with markdown file parameter in js/article-renderer.js
+- [X] T021 [US2] Generate article URLs pointing to content/articles/<slug>.html in js/article-renderer.js
 - [X] T022 [US2] Add graceful fallback block when index fetch fails in blog.html
 
 ## Phase 5: User Story 3 - Auto Publish New Markdown Posts (Priority: P3)
@@ -57,8 +57,8 @@
 
 - [X] T027 [P] Normalize canonical and alternate links in blog.html
 - [X] T028 [P] Add empty-state messaging for zero published articles in blog.html
-- [ ] T029 Verify light/dark mode parity for reader and blog cards in css/custom.css
-- [ ] T030 Run end-to-end manual verification checklist in specs/002-blog-markdown-pipeline/quickstart.md
+- [X] T029 Verify light/dark mode parity for blog cards and generated article pages in css/custom.css
+- [X] T030 Run end-to-end manual verification checklist in specs/002-blog-markdown-pipeline/quickstart.md
 
 ## Dependencies & Execution Order
 
