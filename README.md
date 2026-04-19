@@ -3,16 +3,17 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=160&section=header&text=Satyam%20Thakur&fontSize=40&fontAlignY=35&animation=fadeIn&desc=Networking%20%7C%20Automation%20%7C%20Cloud%20%7C%20AI&descAlignY=55" />
 </p>
 
-### Results-driven Network Development Enthusiast --- Building and automating scalable network infrastructure. Passionate researcher in network optimization, observability, and security, integrating AI to architect resilient, scalable solutions that bridge research and production, backed by industry experience.
+<!-- ### Results-driven Network Development Enthusiast --- Building and automating scalable network infrastructure. Passionate researcher in network optimization, observability, and security, integrating AI to architect resilient, scalable solutions that bridge research and production, backed by industry experience. -->
 
 <p align="right">
   <img src="https://komarev.com/ghpvc/?username=satyam-thakur&label=Profile%20Views&color=blueviolet&style=flat-square" alt="Profile Views" />
 </p>
 
 ## Connect with me:
+
 [![Portfolio](https://img.shields.io/badge/My_Website-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://satyamthakur.com.np)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/thakur-satyam)
-[![Gmail](https://img.shields.io/badge/satyam.th3@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:satyam.th3@gmail.com)
+[![Gmail](https://img.shields.io/badge/Mail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:satyam.th3@gmail.com)
 
 ## Skills
 
@@ -37,7 +38,7 @@
   <a href="https://www.linkedin.com/in/thakur-satyam/details/certifications/" target="_blank"><img src="authors/logos/CCNA.png" alt="CCNA" width="70" height="70"/></a>
   <a href="https://www.linkedin.com/in/thakur-satyam/details/certifications/" target="_blank"><img src="authors/logos/fortinet_logo.jpg" alt="Fortinet NSE 3" width="70" height="70"/></a>
   <a href="https://drive.google.com/file/d/1ldklpcds4RMG6QyA53BcfZPLH8FWX-y8/view?usp=sharing" target="_blank"><img src="authors/logos/HCIP.png" alt="HCIP R&S" width="70" height="70"/></a>
-  <a href="https://drive.google.com/file/d/14UBlXv7NjONckS08_nC3OLQ6BBKzh0De/view?usp=sharing" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1200px-Tux.svg.png" alt="NDG Linux" width="70" height="70"/></a>
+  <a href="https://drive.google.com/file/d/14UBlXv7NjONckS08_nC3OLQ6BBKzh0De/view?usp=sharing" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="NDG Linux" width="70" height="70"/></a>
 </p>
 
 ---
@@ -45,11 +46,9 @@
 <!-- ## 📊 GitHub Stats -->
 
 <p align="center">
-  <a href="https://github.com/satyam-thakur">
+  <!-- <a href="https://github.com/satyam-thakur">
     <img src="https://streak-stats.demolab.com?user=satyam-thakur&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
-  </a>
-</p>
-<p align="center">
+  </a> -->
   <a href="https://github.com/satyam-thakur">
     <img height="170" src="https://github-readme-stats-salesp07.vercel.app/api?username=satyam-thakur&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&hide_border=true&rank_icon=github" alt="GitHub Stats" />
   </a>
