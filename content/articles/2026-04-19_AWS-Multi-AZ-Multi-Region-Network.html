@@ -6,12 +6,12 @@
   <meta name="theme-color" content="#0b0f17">
   <meta name="color-scheme" content="dark">
   <title>AWS Multi-AZ Multi-Region Network using VPC Peering: A 3-Region, 9-Node EC2 Deployment Guide | Satyam Thakur</title>
-  <link rel="canonical" href="AWS-Multi-AZ-Multi-Region-Network.html">
-  <link rel="alternate" hreflang="en" href="AWS-Multi-AZ-Multi-Region-Network.html">
+  <link rel="canonical" href="2026-04-19_AWS-Multi-AZ-Multi-Region-Network.html">
+  <link rel="alternate" hreflang="en" href="2026-04-19_AWS-Multi-AZ-Multi-Region-Network.html">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../../css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
-  <link rel="stylesheet" href="../../css/custom.css?v=6">
+  <link rel="stylesheet" href="../../css/custom.css?v=7">
   <style>
     .generated-article p, .generated-article li { line-height: 1.75; }
     .generated-article img { max-width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; }
@@ -42,25 +42,38 @@
           <p class="mb-4">Published: 2025-04-25</p>
           <p><a href="../../blog.html">← Back to Blog</a></p>
         </div></div></div>
-        <div class="row"><div class="col-12"><article class="blog-card generated-article"><p>In today&#39;s cloud-native era, building fault-tolerant, distributed infrastructures is more than a best practice, it&#39;s a necessity. This article dives into a hands-on walkthrough of deploying a secure and scalable <strong>9-EC2 private network</strong> spanning three <strong>AWS regions</strong> and <strong>Availability Zones (AZs)</strong> using <strong>custom VPCs and VPC Peering</strong>.</p>
+        <div class="row"><div class="col-12"><div class=" generated-article-layout with-toc"><aside class="article-toc is-sticky" aria-label="Table of contents"><p class="article-toc-title">On this page</p><ul class="article-toc-list"><li class="article-toc-item toc-level-2"><a href="#objective">Objective</a></li>
+<li class="article-toc-item toc-level-2"><a href="#step-1-vpc-creation-across-regions">Step 1: VPC Creation Across Regions</a></li>
+<li class="article-toc-item toc-level-3"><a href="#network-architecture">Network Architecture</a></li>
+<li class="article-toc-item toc-level-3"><a href="#subnet-and-instance-mapping">Subnet and Instance Mapping</a></li>
+<li class="article-toc-item toc-level-3"><a href="#create-vpc-123-repeat-for-vpc-456-and-vpc-789">Create VPC-123 (Repeat for VPC-456 and VPC-789)</a></li>
+<li class="article-toc-item toc-level-2"><a href="#step-2-establish-vpc-peering-connections">Step 2: Establish VPC Peering Connections</a></li>
+<li class="article-toc-item toc-level-3"><a href="#how-to-create-peering">How to Create Peering</a></li>
+<li class="article-toc-item toc-level-3"><a href="#confirm-the-connection">Confirm the Connection</a></li>
+<li class="article-toc-item toc-level-2"><a href="#step-3-configure-routing-tables">Step 3: Configure Routing Tables</a></li>
+<li class="article-toc-item toc-level-3"><a href="#route-table-setup">Route Table Setup</a></li>
+<li class="article-toc-item toc-level-2"><a href="#step-4-launch-ec2-instances">Step 4: Launch EC2 Instances</a></li>
+<li class="article-toc-item toc-level-3"><a href="#launch-process">Launch Process</a></li>
+<li class="article-toc-item toc-level-2"><a href="#step-5-test-network-reachability">Step 5: Test Network Reachability</a></li>
+<li class="article-toc-item toc-level-3"><a href="#key-pair-creation-cli-or-console">Key Pair Creation (CLI or Console)</a></li></ul></aside><article class="blog-card generated-article"><p>In today&#39;s cloud-native era, building fault-tolerant, distributed infrastructures is more than a best practice, it&#39;s a necessity. This article dives into a hands-on walkthrough of deploying a secure and scalable <strong>9-EC2 private network</strong> spanning three <strong>AWS regions</strong> and <strong>Availability Zones (AZs)</strong> using <strong>custom VPCs and VPC Peering</strong>.</p>
 <p>Let&#39;s get started.</p>
-<h2>Objective</h2>
+<h2 id="objective">Objective</h2>
 <p>Create a private network architecture that simulates a real-world, distributed cloud environment using:</p>
 <ul>
 <li><strong>3 Regions:</strong> <code>us-east-1</code>, <code>us-east-2</code>, <code>us-west-2</code></li>
 <li><strong>9 EC2 Instances:</strong> One in each AZ across three regions</li>
 <li><strong>3 Custom VPCs:</strong> With defined CIDR ranges and peering across regions</li>
 </ul>
-<h2>Step 1: VPC Creation Across Regions</h2>
+<h2 id="step-1-vpc-creation-across-regions">Step 1: VPC Creation Across Regions</h2>
 <p>A <strong>VPC (Virtual Private Cloud)</strong> in AWS is a private, isolated network where you can launch and manage resources like EC2 instances securely, controlling IP ranges, subnets, and routing. It&#39;s like having your own private data center in the cloud.</p>
 <p>For each region, create one VPC with three public subnets, one per AZ.</p>
-<h3>Network Architecture</h3>
+<h3 id="network-architecture">Network Architecture</h3>
 <p><img src="https://cdn-images-1.medium.com/max/800/1*fcvF7p0IggzfD8pB-aoX5g.png" alt="Network topology showing 3 VPCs across 3 regions" loading="lazy"></p>
 <p><em>Figure: Network topology showing 3 VPCs across 3 regions</em></p>
-<h3>Subnet and Instance Mapping</h3>
+<h3 id="subnet-and-instance-mapping">Subnet and Instance Mapping</h3>
 <p><img src="https://cdn-images-1.medium.com/max/800/1*3CJtZkYZtoJL70TtqK44vg.png" alt="IPv4 Planning 3 VPCs across 3 regions" loading="lazy"></p>
 <p><em>Figure: IPv4 Planning 3 VPCs across 3 regions</em></p>
-<h3>Create VPC-123 (Repeat for VPC-456 and VPC-789)</h3>
+<h3 id="create-vpc-123-repeat-for-vpc-456-and-vpc-789">Create VPC-123 (Repeat for VPC-456 and VPC-789)</h3>
 <p>1. Navigate to: <strong>VPC &gt; Your VPCs &gt; Create VPC</strong></p>
 <p>2. Choose <strong>VPC and more</strong> for a streamlined setup</p>
 <p>3. Configure the following:</p>
@@ -75,9 +88,9 @@
 <p>Repeat the same setup for VPC-456 (<code>10.0.2.0/24</code>, <code>us-east-2</code>) and VPC-789 (<code>10.0.3.0/24</code>, <code>us-west-2</code>).</p>
 <p><img src="https://cdn-images-1.medium.com/max/1200/1*5GqfX0ZOpbnpd0YOum4Kcg.png" alt="Screenshot of AWS Create VPC page" loading="lazy"></p>
 <p><img src="https://cdn-images-1.medium.com/max/1200/1*mvcuhwyUA_YXh0g3pv1bBA.png" alt="Screenshot of Your VPC Table" loading="lazy"></p>
-<h2>Step 2: Establish VPC Peering Connections</h2>
+<h2 id="step-2-establish-vpc-peering-connections">Step 2: Establish VPC Peering Connections</h2>
 <p>To enable inter-region communication between EC2 instances, create peering connections between all three VPCs.</p>
-<h3>How to Create Peering</h3>
+<h3 id="how-to-create-peering">How to Create Peering</h3>
 <p>Go to: <strong>VPC &gt; Peering connections &gt; Create peering connection</strong></p>
 <p>1. Name: <code>VPC-123-VPC-456</code>, <code>VPC-456-VPC-789</code>, etc.</p>
 <p>2. Select VPC (Requester): e.g., <code>VPC-123</code></p>
@@ -85,7 +98,7 @@
 <p>4. VPC ID (Accepter): e.g., <code>VPC-456</code></p>
 <p>5. Accept the connection manually from the target region</p>
 <p><img src="https://cdn-images-1.medium.com/max/1200/1*6igOkDjTjOVDNf692wyIsw.png" alt="Screenshot of AWS VPC Peering page" loading="lazy"></p>
-<h3>Confirm the Connection</h3>
+<h3 id="confirm-the-connection">Confirm the Connection</h3>
 <p>After creating the peering connection, it must be <strong>acknowledged from the Accepter VPC</strong>:</p>
 <p>Navigate to: <strong>VPC &gt; Peering connections list</strong></p>
 <p>1. Locate the new connection with status <strong>Pending Acceptance</strong></p>
@@ -94,9 +107,9 @@
 <p><img src="https://cdn-images-1.medium.com/max/1200/1*CsuaIehNat8Y73PHkbnXEQ.png" alt="Screenshot of AWS VPC Peering Acceptance page" loading="lazy"></p>
 <p><img src="https://cdn-images-1.medium.com/max/1200/1*zCnS4uZu2ehd7URQAsOMgw.png" alt="Screenshot of AWS VPC Peering Established page" loading="lazy"></p>
 <p>However, establishing a peering connection is not enough, <strong>you must also configure subnet routing</strong> so the VPCs can communicate. Let&#39;s cover that next.</p>
-<h2>Step 3: Configure Routing Tables</h2>
+<h2 id="step-3-configure-routing-tables">Step 3: Configure Routing Tables</h2>
 <p>Once peering is active, configure routing tables to connect the networks.</p>
-<h3>Route Table Setup</h3>
+<h3 id="route-table-setup">Route Table Setup</h3>
 <p>Navigate to: <strong>VPC &gt; Route tables &gt; Create route table</strong></p>
 <p><img src="https://cdn-images-1.medium.com/max/1200/1*gmGYfiWll-NDihvvUts2sA.png" alt="Screenshot of Create route table" loading="lazy"></p>
 <p>1. Associate the route table with corresponding subnets.</p>
@@ -122,8 +135,8 @@
 <p>This means communication is only allowed between VPCs that are directly peered.</p>
 <p>If VPC-123 is peered with VPC-456, and VPC-456 is peered with VPC-789, VPC-123 cannot automatically communicate with VPC-789 through VPC-456.</p>
 <p>For additional communication paths, create separate VPC peering connections and manually update route tables to establish direct connectivity between each VPC pair.</p>
-<h2>Step 4: Launch EC2 Instances</h2>
-<h3>Launch Process</h3>
+<h2 id="step-4-launch-ec2-instances">Step 4: Launch EC2 Instances</h2>
+<h3 id="launch-process">Launch Process</h3>
 <p>1. Go to <strong>EC2 &gt; Launch Instance</strong></p>
 <p>2. Choose AMI: Amazon Linux 2 or Ubuntu 22.04</p>
 <p>3. Choose instance type: <code>c7a.xlarge</code> (or <code>t2.micro</code>)</p>
@@ -143,14 +156,14 @@
 <li>3 in each VPC, each placed in a different subnet corresponding to an Availability Zone.</li>
 </ul>
 <p><img src="https://cdn-images-1.medium.com/max/1200/1*WfLCiEep2qGnQSr3rbMGEg.png" alt="Table view from AWS Console summarizing launched instances with AMI, instance type, network/subnet ID, and private IP addresses" loading="lazy"></p>
-<h2>Step 5: Test Network Reachability</h2>
+<h2 id="step-5-test-network-reachability">Step 5: Test Network Reachability</h2>
 <p>SSH into each EC2 instance using its public IP and test connectivity:</p>
 <pre><code>
 ping &lt;Remote host Org4_IP&gt;  # from Org1 to Org4
 ping &lt;Remote host Org7_IP&gt;  # from Org1 to Org7
 </code></pre>
 <p>Make sure to use security groups to allow ICMP and SSH between subnets.</p>
-<h3>Key Pair Creation (CLI or Console)</h3>
+<h3 id="key-pair-creation-cli-or-console">Key Pair Creation (CLI or Console)</h3>
 <ul>
 <li>Key Name: <code>Org1-key</code></li>
 <li>File Format: <code>.pem</code></li>
@@ -168,7 +181,7 @@ ping &lt;Remote host Org7_IP&gt;  # from Org1 to Org7
 <p>---</p>
 <p>By <a href="https://medium.com/@satyam.th3">Satyam Thakur</a></p>
 <p>Original publication date: April 25, 2025</p>
-<p>Canonical source: <a href="https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572">Medium</a></p></article></div></div>
+<p>Canonical source: <a href="https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572">Medium</a></p></article></div></div></div>
       </div>
     </main>
     <div class="page-footer"><div class="container"><footer class="site-footer">

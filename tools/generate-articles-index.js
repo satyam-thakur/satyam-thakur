@@ -5,6 +5,10 @@ const repoRoot = path.resolve(__dirname, "..");
 const articlesDir = path.join(repoRoot, "content", "articles");
 const outputPath = path.join(articlesDir, "articles-index.json");
 
+const DEFAULT_TOC_ENABLED = true;
+const DEFAULT_TOC_STICKY = true;
+const DEFAULT_TOC_LABEL = "On this page";
+
 function escapeHtml(input) {
   return String(input || "")
     .replace(/&/g, "&amp;")
@@ -116,6 +120,45 @@ function normalizeArray(value) {
   return [String(value)];
 }
 
+function parseBoolean(value, fallback) {
+  if (value === undefined || value === null || value === "") {
+    return fallback;
+  }
+
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  const normalized = String(value).trim().toLowerCase();
+  if (["true", "1", "yes", "on"].includes(normalized)) return true;
+  if (["false", "0", "no", "off"].includes(normalized)) return false;
+  return fallback;
+}
+
+function sanitizeHeadingText(text) {
+  return String(text || "")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .trim();
+}
+
+function createAnchorId(text, seen) {
+  const base = String(text || "")
+    .toLowerCase()
+    .replace(/&[a-z]+;/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-") || "section";
+
+  const count = (seen[base] || 0) + 1;
+  seen[base] = count;
+  return count > 1 ? `${base}-${count}` : base;
+}
+
 function toIsoDate(input, fallbackDate) {
   const date = input ? new Date(input) : null;
   if (date && !Number.isNaN(date.getTime())) {
@@ -137,6 +180,8 @@ function renderInlineMarkdown(text) {
 function markdownToHtml(markdown) {
   const lines = String(markdown || "").split(/\r?\n/);
   const output = [];
+  const headings = [];
+  const headingIds = {};
   let inCode = false;
   let inList = false;
 
@@ -169,7 +214,19 @@ function markdownToHtml(markdown) {
         inList = false;
       }
       const level = heading[1].length;
-      output.push(`<h${level}>${renderInlineMarkdown(heading[2])}</h${level}>`);
+      const headingRaw = heading[2].trim();
+      const headingText = sanitizeHeadingText(headingRaw);
+      const headingId = createAnchorId(headingText, headingIds);
+
+      if (level === 2 || level === 3) {
+        headings.push({
+          level,
+          text: headingText,
+          id: headingId
+        });
+      }
+
+      output.push(`<h${level} id="${headingId}">${renderInlineMarkdown(headingRaw)}</h${level}>`);
       return;
     }
 
@@ -206,12 +263,35 @@ function markdownToHtml(markdown) {
     output.push("</code></pre>");
   }
 
-  return output.join("\n");
+  return {
+    html: output.join("\n"),
+    headings
+  };
 }
 
-function buildArticlePage(record, bodyHtml) {
+function renderTocHtml(toc) {
+  if (!toc.enabled || !toc.headings.length) {
+    return "";
+  }
+
+  const label = escapeHtml(toc.label || DEFAULT_TOC_LABEL);
+  const stickyClass = toc.sticky ? " is-sticky" : "";
+
+  const items = toc.headings
+    .map((item) => {
+      const levelClass = item.level === 3 ? " toc-level-3" : " toc-level-2";
+      return `<li class="article-toc-item${levelClass}"><a href="#${escapeHtml(item.id)}">${escapeHtml(item.text)}</a></li>`;
+    })
+    .join("\n");
+
+  return `<aside class="article-toc${stickyClass}" aria-label="Table of contents"><p class="article-toc-title">${label}</p><ul class="article-toc-list">${items}</ul></aside>`;
+}
+
+function buildArticlePage(record, bodyHtml, toc) {
   const publishedDate = escapeHtml(record.date || "");
   const title = escapeHtml(record.title || "Untitled Article");
+  const tocHtml = renderTocHtml(toc);
+  const layoutClass = tocHtml ? " generated-article-layout with-toc" : " generated-article-layout";
 
   return `<!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/Article">
@@ -226,7 +306,7 @@ function buildArticlePage(record, bodyHtml) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../../css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
-  <link rel="stylesheet" href="../../css/custom.css?v=6">
+  <link rel="stylesheet" href="../../css/custom.css?v=7">
   <style>
     .generated-article p, .generated-article li { line-height: 1.75; }
     .generated-article img { max-width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; }
@@ -257,7 +337,7 @@ function buildArticlePage(record, bodyHtml) {
           <p class="mb-4">Published: ${publishedDate}</p>
           <p><a href="../../blog.html">← Back to Blog</a></p>
         </div></div></div>
-        <div class="row"><div class="col-12"><article class="blog-card generated-article">${bodyHtml}</article></div></div>
+        <div class="row"><div class="col-12"><div class="${layoutClass}">${tocHtml}<article class="blog-card generated-article">${bodyHtml}</article></div></div></div>
       </div>
     </main>
     <div class="page-footer"><div class="container"><footer class="site-footer">
@@ -303,6 +383,10 @@ function buildArticleBundle(fileName) {
   const date = toIsoDate(parsed.meta.date, fallbackDate);
   const lastmod = toIsoDate(parsed.meta.lastmod, date);
   const draft = parsed.meta.draft === true || String(parsed.meta.draft).toLowerCase() === "true";
+  const tocEnabled = parseBoolean(parsed.meta.toc, DEFAULT_TOC_ENABLED);
+  const tocSticky = parseBoolean(parsed.meta.toc_sticky, DEFAULT_TOC_STICKY);
+  const tocLabel = parsed.meta.toc_label ? String(parsed.meta.toc_label) : DEFAULT_TOC_LABEL;
+  const rendered = markdownToHtml(parsed.body);
 
   const record = {
     id: slug,
@@ -317,12 +401,20 @@ function buildArticleBundle(fileName) {
     tags: normalizeArray(parsed.meta.tags),
     categories: normalizeArray(parsed.meta.categories),
     draft,
-    canonical_url: parsed.meta.canonical_url || ""
+    canonical_url: parsed.meta.canonical_url || "",
+    toc: tocEnabled,
+    toc_sticky: tocSticky,
+    toc_label: tocLabel
   };
 
   return {
     record,
-    html: buildArticlePage(record, markdownToHtml(parsed.body))
+    html: buildArticlePage(record, rendered.html, {
+      enabled: tocEnabled,
+      sticky: tocSticky,
+      label: tocLabel,
+      headings: rendered.headings
+    })
   };
 }
 

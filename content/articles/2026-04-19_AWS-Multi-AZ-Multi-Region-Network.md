@@ -9,6 +9,9 @@ tags: [AWS, VPC, VPC Peering, EC2, Cloud Networking, Multi-Region]
 categories: [Cloud, Networking]
 draft: false
 canonical_url: "https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572"
+toc: true
+toc_sticky: true
+toc_label: "On this page"
 ---
 
 In today's cloud-native era, building fault-tolerant, distributed infrastructures is more than a best practice, it's a necessity. This article dives into a hands-on walkthrough of deploying a secure and scalable **9-EC2 private network** spanning three **AWS regions** and **Availability Zones (AZs)** using **custom VPCs and VPC Peering**.

@@ -286,6 +286,141 @@ body:not(.dark) .btn.btn-outline-primary:hover {
   color: var(--text);
 }
 
+/* Generated article TOC */
+.generated-article-layout.with-toc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.generated-article-layout.with-toc .generated-article {
+  order: 1;
+}
+
+.article-toc {
+  order: 2;
+  width: 100%;
+  max-width: 240px;
+  justify-self: end;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+}
+
+.article-toc.is-sticky {
+  position: sticky;
+  top: 86px;
+}
+
+.article-toc-title {
+  margin: 0 0 0.55rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.article-toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article-toc-item {
+  margin: 0.35rem 0;
+  line-height: 1.4;
+}
+
+.article-toc-item.toc-level-2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.article-toc-item.toc-level-3 {
+  margin-left: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.article-toc-item a {
+  color: var(--link-primary);
+  text-decoration: none;
+}
+
+.article-toc-item a:hover,
+.article-toc-item a:focus-visible {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+/* Generated article heading scale */
+.generated-article h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.generated-article h2 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  font-weight: 750;
+  margin-top: 1.9rem;
+}
+
+.generated-article h3 {
+  font-size: 1.32rem;
+  line-height: 1.3;
+  font-weight: 700;
+  margin-top: 1.5rem;
+}
+
+.generated-article h4 {
+  font-size: 1.16rem;
+  line-height: 1.35;
+  font-weight: 700;
+  margin-top: 1.2rem;
+}
+
+.generated-article h5 {
+  font-size: 1.03rem;
+  line-height: 1.35;
+  font-weight: 650;
+  margin-top: 1rem;
+}
+
+.generated-article h6 {
+  font-size: 0.94rem;
+  line-height: 1.35;
+  font-weight: 650;
+  margin-top: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 991.98px) {
+  .generated-article-layout.with-toc {
+    display: block;
+  }
+
+  .article-toc,
+  .article-toc.is-sticky {
+    position: static;
+    margin-bottom: 1rem;
+  }
+
+  .generated-article h1 {
+    font-size: 1.8rem;
+  }
+
+  .generated-article h2 {
+    font-size: 1.45rem;
+  }
+
+  .generated-article h3 {
+    font-size: 1.24rem;
+  }
+}
+
 /* Skill bars */
 .skills-wrapper{background:transparent;border:1px solid #1f2937}
 .skills-percent{background:#111827}
