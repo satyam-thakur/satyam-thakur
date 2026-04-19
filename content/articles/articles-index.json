@@ -8,6 +8,7 @@
     "author": "Satyam Thakur",
     "description": "A hands-on walkthrough to deploy a secure and scalable 9-EC2 private network across 3 AWS regions and Availability Zones using custom VPCs and VPC Peering.",
     "path": "content/articles/AWS-Multi-AZ-Multi-Region-Network.md",
+    "html_path": "content/articles/AWS-Multi-AZ-Multi-Region-Network.html",
     "tags": [
       "AWS",
       "VPC",
