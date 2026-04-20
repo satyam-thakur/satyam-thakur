@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
-  <link rel="stylesheet" href="css/custom.css?v=5">
+  <link rel="stylesheet" href="css/custom.css?v=6">
   <script>
     // Theme detection and synchronization
     document.addEventListener('DOMContentLoaded', function() {
@@ -110,6 +110,32 @@
         <!-- Blog Posts -->
         <div class="row">
           <div class="col-12">
+            <div class="blog-filters-toggle-wrap">
+              <button id="blog-filters-toggle" type="button" class="blog-filters-toggle" aria-expanded="false" aria-controls="blog-filters-panel">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <span>Search / Filter</span>
+              </button>
+            </div>
+
+            <section id="blog-filters-panel" class="blog-filters" aria-label="Blog search and filters" hidden>
+              <div class="blog-toolbar">
+                <details class="blog-dropdown" id="blog-category-dropdown">
+                  <summary id="blog-category-summary" class="blog-dropdown-toggle">Categories</summary>
+                  <div id="blog-category-filters" class="blog-dropdown-menu" aria-label="Category filters"></div>
+                </details>
+
+                <details class="blog-dropdown" id="blog-tag-dropdown">
+                  <summary id="blog-tag-summary" class="blog-dropdown-toggle">Tags</summary>
+                  <div id="blog-tag-filters" class="blog-dropdown-menu" aria-label="Tag filters"></div>
+                </details>
+
+                <label class="sr-only" for="blog-search-input">Search blog posts</label>
+                <input id="blog-search-input" class="blog-search-input" type="search" placeholder="Search by title, summary, category, or tag" autocomplete="off">
+                <button id="blog-clear-filters" type="button" class="blog-clear-btn">Clear</button>
+              </div>
+              <p id="blog-active-filters" class="blog-active-filters" aria-live="polite">No filters applied</p>
+            </section>
+
             <div id="blog-posts" aria-live="polite"></div>
 
             <div id="blog-empty-state" class="blog-card" hidden>
@@ -118,7 +144,7 @@
                 <span>No published posts yet</span>
               </div>
               <h3>No articles available</h3>
-              <p>Add a markdown file in <code>content/articles</code> and regenerate the index.</p>
+              <p>New posts will appear here once published.</p>
             </div>
 
             <div id="blog-error-state" class="blog-card" hidden>
@@ -182,7 +208,7 @@
   <script src="js/wowchemy-init.min.3a6bdbdff5d8a89d6e651adb3deec035.js"></script>
   <script src="js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js"></script>
   <script src="js/wowchemy-publication.9137013a66774049159934c29c3f0205.js"></script>
-  <script src="js/article-renderer.js?v=1"></script>
+  <script src="js/article-renderer.js?v=3"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -115,9 +115,48 @@ function extractDescription(body, fallback) {
 }
 
 function normalizeArray(value) {
-  if (Array.isArray(value)) return value.map((item) => String(item));
+  function cleanItem(item) {
+    return String(item || "")
+      .trim()
+      .replace(/^['"]|['"]$/g, "");
+  }
+
+  function parseBracketArray(text) {
+    const trimmed = String(text || "").trim();
+    if (!trimmed.startsWith("[") || !trimmed.endsWith("]")) {
+      return null;
+    }
+
+    const inner = trimmed.slice(1, -1).trim();
+    if (!inner) return [];
+
+    return inner
+      .split(",")
+      .map((item) => cleanItem(item))
+      .filter(Boolean);
+  }
+
+  if (Array.isArray(value)) {
+    if (value.length === 1) {
+      const parsedSingle = parseBracketArray(value[0]);
+      if (parsedSingle) {
+        return parsedSingle;
+      }
+    }
+
+    return value
+      .map((item) => cleanItem(item))
+      .filter(Boolean);
+  }
+
   if (!value) return [];
-  return [String(value)];
+
+  const parsed = parseBracketArray(value);
+  if (parsed) {
+    return parsed;
+  }
+
+  return [cleanItem(value)].filter(Boolean);
 }
 
 function parseBoolean(value, fallback) {
@@ -276,6 +315,7 @@ function renderTocHtml(toc) {
 
   const label = escapeHtml(toc.label || DEFAULT_TOC_LABEL);
   const stickyClass = toc.sticky ? " is-sticky" : "";
+  const listId = "article-toc-list";
 
   const items = toc.headings
     .map((item) => {
@@ -284,7 +324,7 @@ function renderTocHtml(toc) {
     })
     .join("\n");
 
-  return `<aside class="article-toc${stickyClass}" aria-label="Table of contents"><p class="article-toc-title">${label}</p><ul class="article-toc-list">${items}</ul></aside>`;
+  return `<aside class="article-toc${stickyClass}" aria-label="Table of contents"><button type="button" class="article-toc-toggle" aria-expanded="true" aria-controls="${listId}"><span class="article-toc-title">${label}</span><span class="article-toc-toggle-icon" aria-hidden="true"></span></button><ul id="${listId}" class="article-toc-list">${items}</ul></aside>`;
 }
 
 function buildArticlePage(record, bodyHtml, toc) {
@@ -306,7 +346,7 @@ function buildArticlePage(record, bodyHtml, toc) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../../css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
-  <link rel="stylesheet" href="../../css/custom.css?v=7">
+  <link rel="stylesheet" href="../../css/custom.css?v=8">
   <style>
     .generated-article p, .generated-article li { line-height: 1.75; }
     .generated-article img { max-width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; }
@@ -362,6 +402,64 @@ function buildArticlePage(record, bodyHtml, toc) {
           document.body.classList.toggle('light', !darkNow);
           localStorage.setItem('wcTheme', darkNow ? '1' : '0');
         });
+      }
+
+      var toc = document.querySelector('.article-toc');
+      if (toc) {
+        var tocToggle = toc.querySelector('.article-toc-toggle');
+        var tocList = toc.querySelector('.article-toc-list');
+        var mobileQuery = window.matchMedia('(max-width: 991.98px)');
+
+        function applyTocState() {
+          if (!tocToggle || !tocList) {
+            return;
+          }
+
+          if (mobileQuery.matches) {
+            toc.classList.add('is-collapsible');
+            var isOpen = toc.classList.contains('is-open');
+            tocToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            tocList.hidden = !isOpen;
+            return;
+          }
+
+          toc.classList.remove('is-collapsible');
+          toc.classList.add('is-open');
+          tocToggle.setAttribute('aria-expanded', 'true');
+          tocList.hidden = false;
+        }
+
+        if (tocToggle && tocList) {
+          toc.classList.remove('is-open');
+
+          tocToggle.addEventListener('click', function() {
+            if (!mobileQuery.matches) {
+              return;
+            }
+
+            toc.classList.toggle('is-open');
+            applyTocState();
+          });
+
+          toc.addEventListener('click', function(e) {
+            if (!mobileQuery.matches) {
+              return;
+            }
+
+            if (e.target && e.target.closest && e.target.closest('.article-toc-list a')) {
+              toc.classList.remove('is-open');
+              applyTocState();
+            }
+          });
+
+          if (mobileQuery.addEventListener) {
+            mobileQuery.addEventListener('change', applyTocState);
+          } else if (mobileQuery.addListener) {
+            mobileQuery.addListener(applyTocState);
+          }
+
+          applyTocState();
+        }
       }
     })();
   </script>

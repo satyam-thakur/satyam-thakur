@@ -1022,6 +1022,7 @@
   </div>
 
   <script src="/js/wowchemy-publication.9137013a66774049159934c29c3f0205.js" type="module"></script>
+  <script src="/js/article-renderer.js?v=3"></script>
 
 
   <script>
@@ -1150,50 +1151,14 @@
       }
     })();
 
-    // Dynamically load first 2 blog posts from blog.html
+    // Dynamically load first 2 blog posts using the shared blog card renderer
     (function() {
       function loadFeaturedBlogPosts() {
-        fetch('./blog.html')
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.text();
-          })
-          .then(html => {
-            // Create a temporary DOM element to parse the HTML
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            
-            // Get all blog cards from blog.html
-            const allBlogPosts = doc.querySelectorAll('.blog-card');
-            
-            // Get the featured blog posts container
-            const blogContainer = document.getElementById('featured-blog-posts');
-            
-            if (allBlogPosts.length > 0 && blogContainer) {
-              // Clear loading message
-              blogContainer.innerHTML = '';
-              
-              // Add first 2 blog posts
-              const postsToShow = Math.min(2, allBlogPosts.length);
-              for (let i = 0; i < postsToShow; i++) {
-                // Clone the blog post element
-                const blogClone = allBlogPosts[i].cloneNode(true);
-                blogContainer.appendChild(blogClone);
-              }
-            } else {
-              // Fallback message if no blog posts found
-              blogContainer.innerHTML = '<div class="text-center w-100" style="padding: 2rem;"><p>No blog posts available.</p></div>';
-            }
-          })
-          .catch(error => {
-            console.error('Error loading blog posts:', error);
-            const blogContainer = document.getElementById('featured-blog-posts');
-            if (blogContainer) {
-              blogContainer.innerHTML = '<div class="text-center w-100" style="padding: 2rem;"><p>Unable to load blog posts. Please visit the <a href="blog.html">blog page</a>.</p></div>';
-            }
-          });
+        if (!window.ArticleRenderer || !window.ArticleRenderer.initFeaturedBlogPosts) return;
+        window.ArticleRenderer.initFeaturedBlogPosts({
+          containerId: 'featured-blog-posts',
+          limit: 2
+        });
       }
       
       // Load blog posts when DOM is ready

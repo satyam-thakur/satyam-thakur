@@ -1,8 +1,8 @@
 [
   {
-    "id": "aws-multi-az-multi-region-network",
+    "id": "2026-04-19_AWS-Multi-AZ-Multi-Region-Network",
     "title": "AWS Multi-AZ Multi-Region Network using VPC Peering: A 3-Region, 9-Node EC2 Deployment Guide",
-    "slug": "aws-multi-az-multi-region-network",
+    "slug": "2026-04-19_AWS-Multi-AZ-Multi-Region-Network",
     "date": "2025-04-25",
     "lastmod": "2026-04-18",
     "author": "Satyam Thakur",
@@ -10,15 +10,21 @@
     "path": "content/articles/2026-04-19_AWS-Multi-AZ-Multi-Region-Network.md",
     "html_path": "content/articles/2026-04-19_AWS-Multi-AZ-Multi-Region-Network.html",
     "tags": [
-      "[AWS, VPC, VPC Peering, EC2, Cloud Networking, Multi-Region]"
+      "AWS",
+      "VPC",
+      "VPC Peering",
+      "EC2",
+      "Cloud Networking",
+      "Multi-Region"
     ],
     "categories": [
-      "[Cloud, Networking]"
+      "Cloud",
+      "Networking"
     ],
     "draft": false,
-    "canonical_url": "https://medium.com/@satyam.th3/aws-multi-az-multi-region-network-using-vpc-peering-a-3-region-9-node-ec2-deployment-guide-86dc4b801572",
+    "canonical_url": "",
     "toc": true,
     "toc_sticky": true,
-    "toc_label": "On this page"
+    "toc_label": "Table of Contents"
   }
 ]
