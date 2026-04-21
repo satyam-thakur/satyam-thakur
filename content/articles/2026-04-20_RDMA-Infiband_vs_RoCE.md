@@ -13,6 +13,11 @@ toc_label: "Table of Contents"
 
 # Remote Direct Memory Access: The Architecture of InfiniBand and RoCE
 
+*1,990 words · about 9 min read*  
+
+*Disclaimer: This post reflects my personal views and learning notes as I worked through the material.*  
+*Acknowledgement: The draft was put together with research assistance from AI tools, but I curated the content, edited the prose, and cross-checked the references. The images were generated with Nano Banana.*
+
 ## From a 1993 Patent to the Two Fabrics That Carry RDMA Today
 
 <figure style="text-align: center;">
