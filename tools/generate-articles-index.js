@@ -206,52 +206,269 @@ function toIsoDate(input, fallbackDate) {
   return fallbackDate;
 }
 
-function renderInlineMarkdown(text) {
+function extractReferenceDefinitions(lines) {
+  const definitions = {};
+  const definitionLines = new Set();
+
+  lines.forEach((line, index) => {
+    const match = String(line || "").match(/^\[([^\]]+)\]:\s*(\S+)\s*$/);
+    if (!match) return;
+    const key = match[1].trim().toLowerCase();
+    const href = match[2].trim();
+    if (!key || !href) return;
+    definitions[key] = href;
+    definitionLines.add(index);
+  });
+
+  return { definitions, definitionLines };
+}
+
+function linkifyBareUrls(text) {
+  const parts = String(text || "").split(/(<a\b[^>]*>.*?<\/a>|<img\b[^>]*>)/gi);
+
+  return parts
+    .map((part) => {
+      if (!part || /^<a\b/i.test(part) || /^<img\b/i.test(part)) {
+        return part;
+      }
+
+      return part.replace(/(https?:\/\/[^\s<)]+[^\s<).,;!?\]])/gi, '<a href="$1">$1</a>');
+    })
+    .join("");
+}
+
+function renderInlineMarkdown(text, referenceDefinitions) {
   let value = escapeHtml(text);
+  value = value.replace(/\[\[([^\]]+)\]\]\(([^)]+)\)/g, '<a href="$2">[$1]</a>');
   value = value.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy">');
   value = value.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  value = value.replace(/\[([^\]]+)\]\[([^\]]+)\]/g, (match, textValue, key) => {
+    const href = (referenceDefinitions || {})[String(key).trim().toLowerCase()];
+    if (!href) return match;
+    return `<a href="${escapeHtml(href)}">${textValue}</a>`;
+  });
   value = value.replace(/`([^`]+)`/g, "<code>$1</code>");
   value = value.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   value = value.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  value = linkifyBareUrls(value);
   return value;
+}
+
+function parseTableRow(line) {
+  const text = String(line || "");
+  if (!/^\s*\|.*\|\s*$/.test(text)) {
+    return null;
+  }
+
+  return text
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map((cell) => cell.trim());
+}
+
+function isTableAlignmentLine(line) {
+  const text = String(line || "").trim();
+  if (!/^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(text)) {
+    return false;
+  }
+
+  return true;
+}
+
+function isRawHtmlLine(line) {
+  const text = String(line || "").trim();
+
+  if (/^<a\s+id=["'][^"']+["']\s*><\/a>$/i.test(text)) {
+    return true;
+  }
+
+  if (/^<figure\b[^>]*>$/i.test(text) || /^<\/figure>$/i.test(text)) {
+    return true;
+  }
+
+  if (/^<img\b[^>]*\/?\s*>$/i.test(text)) {
+    return true;
+  }
+
+  if (/^<figcaption\b[^>]*>.*<\/figcaption>$/i.test(text)) {
+    return true;
+  }
+
+  return false;
 }
 
 function markdownToHtml(markdown) {
   const lines = String(markdown || "").split(/\r?\n/);
+  const { definitions: referenceDefinitions, definitionLines } = extractReferenceDefinitions(lines);
   const output = [];
   const headings = [];
   const headingIds = {};
   let inCode = false;
-  let inList = false;
+  let inUnorderedList = false;
+  let inOrderedList = false;
+  let inBlockquote = false;
+  let blockquoteLines = [];
+  let inTable = false;
+  let tableHeader = [];
+  let tableRows = [];
 
-  lines.forEach((line) => {
-    if (line.trim().startsWith("```")) {
-      if (inList) {
-        output.push("</ul>");
-        inList = false;
+  function closeLists() {
+    if (inUnorderedList) {
+      output.push("</ul>");
+      inUnorderedList = false;
+    }
+
+    if (inOrderedList) {
+      output.push("</ol>");
+      inOrderedList = false;
+    }
+  }
+
+  function closeBlockquote() {
+    if (!inBlockquote) {
+      return;
+    }
+
+    const paragraphs = [];
+    let paragraphBuffer = [];
+
+    blockquoteLines.forEach((entry) => {
+      if (!entry.trim()) {
+        if (paragraphBuffer.length) {
+          paragraphs.push(`<p>${renderInlineMarkdown(paragraphBuffer.join(" "), referenceDefinitions)}</p>`);
+          paragraphBuffer = [];
+        }
+        return;
       }
 
+      paragraphBuffer.push(entry);
+    });
+
+    if (paragraphBuffer.length) {
+      paragraphs.push(`<p>${renderInlineMarkdown(paragraphBuffer.join(" "), referenceDefinitions)}</p>`);
+    }
+
+    output.push(`<blockquote>\n${paragraphs.join("\n")}\n</blockquote>`);
+    inBlockquote = false;
+    blockquoteLines = [];
+  }
+
+  function closeTable() {
+    if (!inTable) {
+      return;
+    }
+
+    const headerHtml = tableHeader
+      .map((cell) => `<th>${renderInlineMarkdown(cell, referenceDefinitions)}</th>`)
+      .join("");
+
+    const bodyHtml = tableRows
+      .map((row) => {
+        const cells = row
+          .map((cell) => `<td>${renderInlineMarkdown(cell, referenceDefinitions)}</td>`)
+          .join("");
+
+        return `<tr>${cells}</tr>`;
+      })
+      .join("\n");
+
+    output.push(`<div class="generated-article-table-wrap"><table><thead><tr>${headerHtml}</tr></thead><tbody>${bodyHtml}</tbody></table></div>`);
+
+    inTable = false;
+    tableHeader = [];
+    tableRows = [];
+  }
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const trimmed = line.trim();
+
+    if (definitionLines.has(index)) {
+      closeTable();
+      closeBlockquote();
+      closeLists();
+      continue;
+    }
+
+    if (trimmed.startsWith("```")) {
+      closeTable();
+      closeBlockquote();
+      closeLists();
+
       if (!inCode) {
+        const language = trimmed.slice(3).trim();
+        const classAttr = language ? ` class="language-${escapeHtml(language)}"` : "";
         inCode = true;
-        output.push("<pre><code>");
+        output.push(`<pre><code${classAttr}>`);
       } else {
         inCode = false;
         output.push("</code></pre>");
       }
-      return;
+
+      continue;
     }
 
     if (inCode) {
       output.push(escapeHtml(line));
-      return;
+      continue;
     }
+
+    if (isRawHtmlLine(trimmed)) {
+      closeTable();
+      closeBlockquote();
+      closeLists();
+      output.push(trimmed);
+      continue;
+    }
+
+    if (!inTable) {
+      const headerCandidate = parseTableRow(line);
+      const alignmentLine = lines[index + 1];
+      if (headerCandidate && isTableAlignmentLine(alignmentLine)) {
+        closeBlockquote();
+        closeLists();
+
+        inTable = true;
+        tableHeader = headerCandidate;
+        tableRows = [];
+        index += 1;
+        continue;
+      }
+    }
+
+    if (inTable) {
+      const rowCandidate = parseTableRow(line);
+      if (rowCandidate) {
+        tableRows.push(rowCandidate);
+        continue;
+      }
+
+      closeTable();
+    }
+
+    const blockquoteMatch = line.match(/^\s*>\s?(.*)$/);
+    if (blockquoteMatch) {
+      closeLists();
+      if (!inBlockquote) {
+        inBlockquote = true;
+        blockquoteLines = [];
+      }
+      blockquoteLines.push(blockquoteMatch[1]);
+      continue;
+    }
+
+    if (inBlockquote && !trimmed) {
+      blockquoteLines.push("");
+      continue;
+    }
+
+    closeBlockquote();
 
     const heading = line.match(/^(#{1,6})\s+(.+)$/);
     if (heading) {
-      if (inList) {
-        output.push("</ul>");
-        inList = false;
-      }
+      closeLists();
       const level = heading[1].length;
       const headingRaw = heading[2].trim();
       const headingText = sanitizeHeadingText(headingRaw);
@@ -265,39 +482,57 @@ function markdownToHtml(markdown) {
         });
       }
 
-      output.push(`<h${level} id="${headingId}">${renderInlineMarkdown(headingRaw)}</h${level}>`);
-      return;
+      output.push(`<h${level} id="${headingId}">${renderInlineMarkdown(headingRaw, referenceDefinitions)}</h${level}>`);
+      continue;
     }
 
-    const listItem = line.match(/^\s*-\s+(.+)$/);
-    if (listItem) {
-      if (!inList) {
+    const unorderedItem = line.match(/^\s*[-*+]\s+(.+)$/);
+    if (unorderedItem) {
+      if (inOrderedList) {
+        output.push("</ol>");
+        inOrderedList = false;
+      }
+      if (!inUnorderedList) {
         output.push("<ul>");
-        inList = true;
+        inUnorderedList = true;
       }
-      output.push(`<li>${renderInlineMarkdown(listItem[1])}</li>`);
-      return;
+      output.push(`<li>${renderInlineMarkdown(unorderedItem[1], referenceDefinitions)}</li>`);
+      continue;
     }
 
-    if (!line.trim()) {
-      if (inList) {
+    const orderedItem = line.match(/^\s*\d+\.\s+(.+)$/);
+    if (orderedItem) {
+      if (inUnorderedList) {
         output.push("</ul>");
-        inList = false;
+        inUnorderedList = false;
       }
-      return;
+      if (!inOrderedList) {
+        output.push("<ol>");
+        inOrderedList = true;
+      }
+      output.push(`<li>${renderInlineMarkdown(orderedItem[1], referenceDefinitions)}</li>`);
+      continue;
     }
 
-    if (inList) {
-      output.push("</ul>");
-      inList = false;
+    if (!trimmed) {
+      closeLists();
+      continue;
     }
 
-    output.push(`<p>${renderInlineMarkdown(line)}</p>`);
-  });
+    if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+      closeLists();
+      output.push("<hr>");
+      continue;
+    }
 
-  if (inList) {
-    output.push("</ul>");
+    closeLists();
+    output.push(`<p>${renderInlineMarkdown(line, referenceDefinitions)}</p>`);
   }
+
+  closeTable();
+  closeBlockquote();
+  closeLists();
+
   if (inCode) {
     output.push("</code></pre>");
   }
@@ -352,7 +587,15 @@ function buildArticlePage(record, bodyHtml, toc) {
     .generated-article img { max-width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; }
     .generated-article pre { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 1rem; overflow-x: auto; }
     .generated-article code { background: rgba(148, 163, 184, 0.15); border-radius: 6px; padding: 0.1rem 0.35rem; }
+    .generated-article blockquote { border-left: 4px solid #22c55e; margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(34, 197, 94, 0.08); border-radius: 0 8px 8px 0; }
+    .generated-article blockquote p:last-child { margin-bottom: 0; }
+    .generated-article-table-wrap { overflow-x: auto; margin: 1rem 0; }
+    .generated-article table { width: 100%; border-collapse: collapse; min-width: 420px; }
+    .generated-article th, .generated-article td { border: 1px solid rgba(148, 163, 184, 0.35); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+    .generated-article th { background: rgba(148, 163, 184, 0.16); }
     body.light .generated-article pre { background: #e2e8f0; color: #0f172a; }
+    body.light .generated-article blockquote { background: rgba(34, 197, 94, 0.09); border-left-color: #16a34a; }
+    body.light .generated-article th { background: rgba(148, 163, 184, 0.22); }
   </style>
 </head>
 <body>

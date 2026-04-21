@@ -9,3 +9,4 @@ Thumbs.db
 *.tmp
 *.swp
 !.github/workflows
+.venv
