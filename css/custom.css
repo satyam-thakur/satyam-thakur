@@ -307,6 +307,7 @@ body:not(.dark) .btn.btn-outline-primary:hover {
   border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 0.9rem 1rem;
+  color: var(--text);
 }
 
 .article-toc.is-sticky {
@@ -326,10 +327,17 @@ body:not(.dark) .btn.btn-outline-primary:hover {
 }
 
 .article-toc-title {
-  margin: 0;
-  font-size: 1.02rem;
-  font-weight: 700;
+  display: block;
+  margin: 0 0 0.35rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.55);
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
   color: var(--text);
+}
+body.dark .article-toc-title {
+  border-bottom-color: rgba(148, 163, 184, 0.35);
 }
 
 .article-toc-toggle-icon {
@@ -343,8 +351,16 @@ body:not(.dark) .btn.btn-outline-primary:hover {
 }
 
 .article-toc-item {
-  margin: 0.35rem 0;
+  margin: 0;
   line-height: 1.4;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.55);
+}
+body.dark .article-toc-item {
+  border-bottom-color: rgba(148, 163, 184, 0.35);
+}
+
+.article-toc-item:last-child {
+  border-bottom: 0;
 }
 
 .article-toc-item.toc-level-2 {
@@ -353,20 +369,28 @@ body:not(.dark) .btn.btn-outline-primary:hover {
 }
 
 .article-toc-item.toc-level-3 {
-  margin-left: 0.95rem;
   font-size: 0.92rem;
   font-weight: 500;
 }
 
 .article-toc-item a {
-  color: var(--link-primary);
+  display: block;
+  padding: 0.45rem 0.5rem;
+  border-radius: 6px;
+  color: var(--text);
   text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.article-toc-item.toc-level-3 a {
+  padding-left: 1.25rem;
 }
 
 .article-toc-item a:hover,
 .article-toc-item a:focus-visible {
-  color: var(--link-hover);
-  text-decoration: underline;
+  background: var(--card-border);
+  transform: translateX(2px);
+  text-decoration: none;
 }
 
 /* Generated article heading scale */
