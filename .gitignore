@@ -8,5 +8,6 @@ build/
 Thumbs.db
 *.tmp
 *.swp
+.github
 !.github/workflows
 .venv
