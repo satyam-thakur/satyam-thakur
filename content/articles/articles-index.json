@@ -4,7 +4,7 @@
     "title": "Remote Direct Memory Access (RDMA): InfiniBand and RoCE Architecture, Performance, and Deployment",
     "slug": "2026-04-20_RDMA-Infiband_vs_RoCE",
     "date": "2026-04-19",
-    "lastmod": "2026-04-20",
+    "lastmod": "2026-04-21",
     "author": "Satyam Thakur",
     "description": "A deep dive into RDMA across InfiniBand and RoCE, covering kernel bypass, flow control, congestion management, and deployment trade-offs for AI and HPC clusters.",
     "path": "content/articles/2026-04-20_RDMA-Infiband_vs_RoCE.md",
