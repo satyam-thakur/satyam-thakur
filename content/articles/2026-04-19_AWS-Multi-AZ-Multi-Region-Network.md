@@ -9,6 +9,7 @@ categories: [Cloud, Networking]
 draft: false
 toc: true
 toc_label: "Table of Contents"
+views: true
 ---
 
 In today's cloud-native era, building fault-tolerant, distributed infrastructures is more than a best practice, it's a necessity. This article dives into a hands-on walkthrough of deploying a secure and scalable **9-EC2 private network** spanning three **AWS regions** and **Availability Zones (AZs)** using **custom VPCs and VPC Peering**.

@@ -9,6 +9,7 @@ categories: [Cloud, Networking, AI Infrastructure]
 draft: false
 toc: true
 toc_label: "Table of Contents"
+views: true
 ---
 
 # Remote Direct Memory Access: The Architecture of InfiniBand and RoCE

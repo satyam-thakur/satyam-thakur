@@ -138,6 +138,14 @@
     return "<div class=\"blog-tags\" aria-label=\"Tags\">" + tagsHtml + "</div>";
   }
 
+  function renderViewsBadge(item) {
+    if (!item || !item.views) return "";
+    var slug = escapeHtml(item.slug || item.id || "");
+    if (!slug) return "";
+    return "<span class=\"separator\">•</span>" +
+      "<img class=\"blog-views-badge\" src=\"https://hits.sh/satyamthakur.com.np/" + slug + ".svg?view=total&label=Views&color=6b21a8&style=flat-square\" alt=\"Views\" loading=\"lazy\">";
+  }
+
   function renderCards(items, container) {
     var html = items.map(function (item) {
       var title = escapeHtml(item.title || "Untitled Article");
@@ -157,6 +165,7 @@
             "<span class=\"separator\">•</span>" +
             "<i class=\"fas fa-tags\"></i>" +
             "<span>" + categoryText + "</span>" +
+            renderViewsBadge(item) +
           "</div>" +
           "<h3><a href=\"" + articleUrl + "\">" + title + "</a></h3>" +
           "<p>" + description + "</p>" +

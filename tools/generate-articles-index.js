@@ -562,11 +562,19 @@ function renderTocHtml(toc) {
   return `<aside class="article-toc${stickyClass}" aria-label="Table of contents"><button type="button" class="article-toc-toggle" aria-expanded="true" aria-controls="${listId}"><span class="article-toc-title">${label}</span><span class="article-toc-toggle-icon" aria-hidden="true"></span></button><ul id="${listId}" class="article-toc-list">${items}</ul></aside>`;
 }
 
+function buildViewsBadgeHtml(record) {
+  if (!record.views) return "";
+  const slug = escapeHtml(record.slug || record.id || "");
+  if (!slug) return "";
+  return `<span class="separator" style="margin: 0 0.5rem;">•</span><img class="blog-views-badge" src="https://hits.sh/satyamthakur.com.np/${slug}.svg?view=total&label=Views&color=6b21a8&style=flat-square" alt="Views" loading="lazy">`;
+}
+
 function buildArticlePage(record, bodyHtml, toc) {
   const publishedDate = escapeHtml(record.date || "");
   const title = escapeHtml(record.title || "Untitled Article");
   const tocHtml = renderTocHtml(toc);
   const layoutClass = tocHtml ? " generated-article-layout with-toc" : " generated-article-layout";
+  const viewsBadge = buildViewsBadgeHtml(record);
 
   return `<!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/Article">
@@ -581,7 +589,7 @@ function buildArticlePage(record, bodyHtml, toc) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../../css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
-  <link rel="stylesheet" href="../../css/custom.css?v=8">
+  <link rel="stylesheet" href="../../css/custom.css?v=9">
   <style>
     .generated-article p, .generated-article li { line-height: 1.75; }
     .generated-article img { max-width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; }
@@ -617,7 +625,7 @@ function buildArticlePage(record, bodyHtml, toc) {
       <div class="container">
         <div class="row"><div class="col-12"><div class="py-4">
           <h1 class="mb-2">${title}</h1>
-          <p class="mb-4">Published: ${publishedDate}</p>
+          <p class="mb-4">Published: ${publishedDate}${viewsBadge}</p>
           <p><a href="../../blog.html">← Back to Blog</a></p>
         </div></div></div>
         <div class="row"><div class="col-12"><div class="${layoutClass}">${tocHtml}<article class="blog-card generated-article">${bodyHtml}</article></div></div></div>
@@ -729,6 +737,8 @@ function buildArticleBundle(fileName) {
   const tocLabel = parsed.meta.toc_label ? String(parsed.meta.toc_label) : DEFAULT_TOC_LABEL;
   const rendered = markdownToHtml(parsed.body);
 
+  const viewsEnabled = parseBoolean(parsed.meta.views, false);
+
   const record = {
     id: slug,
     title,
@@ -745,7 +755,8 @@ function buildArticleBundle(fileName) {
     canonical_url: parsed.meta.canonical_url || "",
     toc: tocEnabled,
     toc_sticky: tocSticky,
-    toc_label: tocLabel
+    toc_label: tocLabel,
+    views: viewsEnabled
   };
 
   return {

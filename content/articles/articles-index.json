@@ -29,7 +29,8 @@
     "canonical_url": "",
     "toc": true,
     "toc_sticky": true,
-    "toc_label": "Table of Contents"
+    "toc_label": "Table of Contents",
+    "views": true
   },
   {
     "id": "2026-04-19_AWS-Multi-AZ-Multi-Region-Network",
@@ -57,6 +58,7 @@
     "canonical_url": "",
     "toc": true,
     "toc_sticky": true,
-    "toc_label": "Table of Contents"
+    "toc_label": "Table of Contents",
+    "views": true
   }
 ]

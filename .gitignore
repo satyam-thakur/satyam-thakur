@@ -1,4 +1,7 @@
 .claude
+.agent
+.github
+.venv
 node_modules/
 dist/
 build/
@@ -8,6 +11,4 @@ build/
 Thumbs.db
 *.tmp
 *.swp
-.github
 !.github/workflows
-.venv
