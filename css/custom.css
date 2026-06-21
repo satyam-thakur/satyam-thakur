@@ -1311,3 +1311,20 @@ body:not(.dark) .navbar.fixed-top {
 }
 
 /* Article reader page */
+
+/* Blog views badge */
+.blog-views-badge {
+  height: 20px;
+  vertical-align: middle;
+  border-radius: 3px;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.blog-views-badge:hover {
+  opacity: 1;
+}
+
+.blog-meta .blog-views-badge {
+  margin-left: 2px;
+}
