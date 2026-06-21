@@ -1,6 +1,7 @@
 .claude
 .agent
 .github
+!.github/instructions/Article*
 .venv
 node_modules/
 dist/
