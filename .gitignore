@@ -16,5 +16,3 @@ Thumbs.db
 *.tmp
 *.swp
 specs/
-content/articles/*.html
-content/articles/*.json
