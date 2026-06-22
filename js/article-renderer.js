@@ -146,19 +146,28 @@
       "<img class=\"blog-views-badge\" src=\"https://hits.sh/satyamthakur.com.np/" + slug + ".svg?view=total&label=Views&color=6b21a8&style=flat-square\" alt=\"Views\" loading=\"lazy\">";
   }
 
+  function isExternalLinkArticle(item) {
+    return item.link === true && typeof item.url === "string" && /^https?:\/\//i.test(item.url);
+  }
+
   function renderCards(items, container) {
     var html = items.map(function (item) {
       var title = escapeHtml(item.title || "Untitled Article");
       var description = escapeHtml(item.description || "No description available.");
       var date = escapeHtml(cardMetaText(item));
       var categoryText = escapeHtml(categoriesLabel(item));
-      var articleUrl = deriveArticleUrl(item);
+      var isExternal = isExternalLinkArticle(item);
+      var articleUrl = isExternal ? escapeHtml(item.url) : deriveArticleUrl(item);
       if (!articleUrl) {
         return "";
       }
+      var targetAttr = isExternal ? " target=\"_blank\" rel=\"noopener\"" : "";
+      var externalIcon = isExternal ? " <i class=\"fas fa-external-link-alt\" aria-hidden=\"true\"></i>" : "";
+      var cardClass = isExternal ? "blog-card blog-card--external" : "blog-card";
+      var cardDataAttr = isExternal ? " data-external-url=\"" + articleUrl + "\"" : "";
 
       return "" +
-        "<div class=\"blog-card\">" +
+        "<div class=\"" + cardClass + "\"" + cardDataAttr + ">" +
           "<div class=\"blog-meta\">" +
             "<i class=\"far fa-calendar\"></i>" +
             "<span>" + date + "</span>" +
@@ -167,14 +176,24 @@
             "<span>" + categoryText + "</span>" +
             renderViewsBadge(item) +
           "</div>" +
-          "<h3><a href=\"" + articleUrl + "\">" + title + "</a></h3>" +
+          "<h3><a href=\"" + articleUrl + "\"" + targetAttr + ">" + title + externalIcon + "</a></h3>" +
           "<p>" + description + "</p>" +
           renderTags(item) +
-          "<a href=\"" + articleUrl + "\" class=\"read-more\">Read more →</a>" +
+          "<a href=\"" + articleUrl + "\" class=\"read-more\"" + targetAttr + ">Read more" + externalIcon + " →</a>" +
         "</div>";
     }).join("");
 
     container.innerHTML = html;
+
+    var externalCards = container.querySelectorAll(".blog-card--external");
+    Array.prototype.forEach.call(externalCards, function (card) {
+      card.style.cursor = "pointer";
+      card.addEventListener("click", function (e) {
+        if (e.target.closest && e.target.closest("a")) return;
+        var url = card.getAttribute("data-external-url");
+        if (url) window.open(url, "_blank", "noopener");
+      });
+    });
   }
 
   function uniqSorted(values) {
@@ -459,7 +478,7 @@
       var entries = await response.json();
       var published = Array.isArray(entries)
         ? entries.filter(function (item) {
-            return item && item.draft !== true && deriveArticleUrl(item);
+            return item && item.draft !== true && (deriveArticleUrl(item) || isExternalLinkArticle(item));
           }).map(prepareItem)
         : [];
 
@@ -500,7 +519,7 @@
       var entries = await response.json();
       var published = Array.isArray(entries)
         ? entries.filter(function (item) {
-            return item && item.draft !== true && deriveArticleUrl(item);
+            return item && item.draft !== true && (deriveArticleUrl(item) || isExternalLinkArticle(item));
           }).map(prepareItem)
         : [];
 

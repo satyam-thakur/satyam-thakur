@@ -2,6 +2,9 @@
 .agent
 .github
 !.github/instructions/Article*
+!.github/workflows
+.specify
+!.specify/memory
 .venv
 node_modules/
 dist/
@@ -12,4 +15,5 @@ build/
 Thumbs.db
 *.tmp
 *.swp
-!.github/workflows
+specs/
+content/articles/*.html

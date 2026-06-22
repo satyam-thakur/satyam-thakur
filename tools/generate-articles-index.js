@@ -719,6 +719,13 @@ function buildArticlePage(record, bodyHtml, toc) {
 `;
 }
 
+function sanitizeExternalUrl(input) {
+  const trimmed = String(input || "").trim().replace(/^["']|["']$/g, "");
+  if (!trimmed) return "";
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return "";
+}
+
 function buildArticleBundle(fileName) {
   const absolutePath = path.join(articlesDir, fileName);
   const markdown = fs.readFileSync(absolutePath, "utf8");
@@ -738,6 +745,8 @@ function buildArticleBundle(fileName) {
   const rendered = markdownToHtml(parsed.body);
 
   const viewsEnabled = parseBoolean(parsed.meta.views, false);
+  const linkEnabled = parseBoolean(parsed.meta.link, false);
+  const externalUrl = sanitizeExternalUrl(parsed.meta.url || "");
 
   const record = {
     id: slug,
@@ -756,7 +765,9 @@ function buildArticleBundle(fileName) {
     toc: tocEnabled,
     toc_sticky: tocSticky,
     toc_label: tocLabel,
-    views: viewsEnabled
+    views: viewsEnabled,
+    link: linkEnabled,
+    url: externalUrl
   };
 
   return {
