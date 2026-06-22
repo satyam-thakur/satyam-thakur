@@ -3,8 +3,8 @@
 .github
 !.github/instructions/Article*
 !.github/workflows
-.specify
 !.specify/memory
+.specify
 .venv
 node_modules/
 dist/

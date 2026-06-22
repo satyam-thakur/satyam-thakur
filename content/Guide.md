@@ -23,3 +23,6 @@ Set-Location 'C:\Users\SATYAM\Documents\ACareer\I_Portfolio\satyam-thakur'; & .\
 3. Write the article content.
 4. Run the Generate Articles Index command above.
 5. Start the local HTTP server and verify the article page and listing.
+
+#### For Speckit
+Refer: https://github.com/github/spec-kit
