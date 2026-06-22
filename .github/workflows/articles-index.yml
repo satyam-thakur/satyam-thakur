@@ -11,23 +11,36 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: articles-index-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate-index:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: "22"
 
       - name: Generate article index
         run: node tools/generate-articles-index.js
+
+      - name: Upload generated artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: articles-index-${{ github.run_number }}
+          path: |
+            content/articles/articles-index.json
+            content/articles/*.html
+          retention-days: 30
 
       - name: Commit updated index
         run: |
@@ -40,4 +53,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add content/articles/articles-index.json content/articles/*.html
           git commit -m "chore: update articles index"
+          git pull --rebase origin ${{ github.ref_name }}
           git push
+

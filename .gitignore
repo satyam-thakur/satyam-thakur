@@ -17,3 +17,4 @@ Thumbs.db
 *.swp
 specs/
 content/articles/*.html
+content/articles/*.json
