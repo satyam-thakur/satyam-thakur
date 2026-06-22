@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Article">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0f17">
+  <meta name="color-scheme" content="dark">
+  <title>Loop Engineering: Stop Prompting the Agent, Build the Loop | Satyam Thakur</title>
+  <link rel="canonical" href="2026-04-21_Loop_Engineering.html">
+  <link rel="alternate" hreflang="en" href="2026-04-21_Loop_Engineering.html">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
+  <link rel="stylesheet" href="../../css/custom.css?v=9">
+  <style>
+    .generated-article p, .generated-article li { line-height: 1.75; }
+    .generated-article img { max-width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; }
+    .generated-article pre { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 1rem; overflow-x: auto; }
+    .generated-article code { background: rgba(148, 163, 184, 0.15); border-radius: 6px; padding: 0.1rem 0.35rem; }
+    .generated-article blockquote { border-left: 4px solid #22c55e; margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(34, 197, 94, 0.08); border-radius: 0 8px 8px 0; }
+    .generated-article blockquote p:last-child { margin-bottom: 0; }
+    .generated-article-table-wrap { overflow-x: auto; margin: 1rem 0; }
+    .generated-article table { width: 100%; border-collapse: collapse; min-width: 420px; }
+    .generated-article th, .generated-article td { border: 1px solid rgba(148, 163, 184, 0.35); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+    .generated-article th { background: rgba(148, 163, 184, 0.16); }
+    body.light .generated-article pre { background: #e2e8f0; color: #0f172a; }
+    body.light .generated-article blockquote { background: rgba(34, 197, 94, 0.09); border-left-color: #16a34a; }
+    body.light .generated-article th { background: rgba(148, 163, 184, 0.22); }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar fixed-top" id="navbar-main">
+      <div class="container-xl">
+        <div class="d-none d-lg-inline-flex"><a class="navbar-brand" href="../../index.html">Satyam Thakur</a></div>
+        <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none"><a class="navbar-brand" href="../../index.html">Stay with me!</a></div>
+        <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+          <li class="nav-item theme-toggle">
+            <a href="#" class="nav-link js-set-theme-auto" aria-label="Toggle theme">
+              <i class="fas fa-moon" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main class="main-content">
+      <div class="container">
+        <div class="row"><div class="col-12"><div class="py-4">
+          <h1 class="mb-2">Loop Engineering: Stop Prompting the Agent, Build the Loop</h1>
+          <p class="mb-4">Published: 2026-06-20<span class="separator" style="margin: 0 0.5rem;">•</span><img class="blog-views-badge" src="https://hits.sh/satyamthakur.com.np/2026-04-21_Loop_Engineering.svg?view=total&label=Views&color=6b21a8&style=flat-square" alt="Views" loading="lazy"></p>
+          <p><a href="../../blog.html">← Back to Blog</a></p>
+        </div></div></div>
+        <div class="row"><div class="col-12"><div class=" generated-article-layout"><article class="blog-card generated-article"></article></div></div></div>
+      </div>
+    </main>
+    <div class="page-footer"><div class="container"><footer class="site-footer">
+      <p class="powered-by copyright-license-text">© 2025 Satyam Thakur</p>
+      <p class="powered-by">Network Development Engineer</p>
+      <p class="powered-by"><a href="../../blog.html">Blog</a> · <a href="../../index.html">Home</a></p>
+    </footer></div></div>
+  </div>
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('wcTheme');
+      var isDarkMode = savedTheme === '1' || savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.body.classList.toggle('dark', isDarkMode);
+      document.body.classList.toggle('light', !isDarkMode);
+      if (!savedTheme) localStorage.setItem('wcTheme', isDarkMode ? '1' : '0');
+
+      var themeButton = document.querySelector('.js-set-theme-auto');
+      if (themeButton) {
+        themeButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          var darkNow = document.body.classList.toggle('dark');
+          document.body.classList.toggle('light', !darkNow);
+          localStorage.setItem('wcTheme', darkNow ? '1' : '0');
+        });
+      }
+
+      var toc = document.querySelector('.article-toc');
+      if (toc) {
+        var tocToggle = toc.querySelector('.article-toc-toggle');
+        var tocList = toc.querySelector('.article-toc-list');
+        var mobileQuery = window.matchMedia('(max-width: 991.98px)');
+
+        function applyTocState() {
+          if (!tocToggle || !tocList) {
+            return;
+          }
+
+          if (mobileQuery.matches) {
+            toc.classList.add('is-collapsible');
+            var isOpen = toc.classList.contains('is-open');
+            tocToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            tocList.hidden = !isOpen;
+            return;
+          }
+
+          toc.classList.remove('is-collapsible');
+          toc.classList.add('is-open');
+          tocToggle.setAttribute('aria-expanded', 'true');
+          tocList.hidden = false;
+        }
+
+        if (tocToggle && tocList) {
+          toc.classList.remove('is-open');
+
+          tocToggle.addEventListener('click', function() {
+            if (!mobileQuery.matches) {
+              return;
+            }
+
+            toc.classList.toggle('is-open');
+            applyTocState();
+          });
+
+          toc.addEventListener('click', function(e) {
+            if (!mobileQuery.matches) {
+              return;
+            }
+
+            if (e.target && e.target.closest && e.target.closest('.article-toc-list a')) {
+              toc.classList.remove('is-open');
+              applyTocState();
+            }
+          });
+
+          if (mobileQuery.addEventListener) {
+            mobileQuery.addEventListener('change', applyTocState);
+          } else if (mobileQuery.addListener) {
+            mobileQuery.addListener(applyTocState);
+          }
+
+          applyTocState();
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

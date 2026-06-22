@@ -1,0 +1,103 @@
+[
+  {
+    "id": "2026-04-21_Loop_Engineering",
+    "title": "Loop Engineering: Stop Prompting the Agent, Build the Loop",
+    "slug": "2026-04-21_Loop_Engineering",
+    "date": "2026-06-20",
+    "lastmod": "2026-06-21",
+    "author": "Satyam Thakur",
+    "description": "How AI-assisted development moved from prompting an agent task-by-task to designing the loop that prompts it — covering triggers, file-based memory, the maker/checker split, compounding loops, and cost.",
+    "path": "content/articles/2026-04-21_Loop_Engineering.md",
+    "html_path": "content/articles/2026-04-21_Loop_Engineering.html",
+    "tags": [
+      "Loop Engineering",
+      "AI Agents",
+      "Coding Agents",
+      "Prompt Engineering",
+      "Context Engineering",
+      "MCP",
+      "Agent Skills",
+      "Claude Code",
+      "Recursive Self-Improvement"
+    ],
+    "categories": [
+      "AI",
+      "Software Engineering",
+      "Developer Tools"
+    ],
+    "draft": false,
+    "canonical_url": "",
+    "toc": true,
+    "toc_sticky": true,
+    "toc_label": "Table of Contents",
+    "views": true,
+    "link": true,
+    "url": "https://thakursatyam.substack.com/p/loop-engineering-stop-prompting-the?r=819ovt"
+  },
+  {
+    "id": "2026-04-20_RDMA-Infiband_vs_RoCE",
+    "title": "Remote Direct Memory Access (RDMA): InfiniBand and RoCE Architecture, Performance, and Deployment",
+    "slug": "2026-04-20_RDMA-Infiband_vs_RoCE",
+    "date": "2026-04-19",
+    "lastmod": "2026-04-21",
+    "author": "Satyam Thakur",
+    "description": "A deep dive into RDMA across InfiniBand and RoCE, covering kernel bypass, flow control, congestion management, and deployment trade-offs for AI and HPC clusters.",
+    "path": "content/articles/2026-04-20_RDMA-Infiband_vs_RoCE.md",
+    "html_path": "content/articles/2026-04-20_RDMA-Infiband_vs_RoCE.html",
+    "tags": [
+      "RDMA",
+      "RoCE",
+      "InfiniBand",
+      "iWARP",
+      "PFC",
+      "DCQCN",
+      "AI Infrastructure",
+      "HPC",
+      "Cloud Networking"
+    ],
+    "categories": [
+      "Cloud",
+      "Networking",
+      "AI Infrastructure"
+    ],
+    "draft": false,
+    "canonical_url": "",
+    "toc": true,
+    "toc_sticky": true,
+    "toc_label": "Table of Contents",
+    "views": true,
+    "link": false,
+    "url": ""
+  },
+  {
+    "id": "2026-04-19_AWS-Multi-AZ-Multi-Region-Network",
+    "title": "AWS Multi-AZ Multi-Region Network using VPC Peering: A 3-Region, 9-Node EC2 Deployment Guide",
+    "slug": "2026-04-19_AWS-Multi-AZ-Multi-Region-Network",
+    "date": "2025-04-25",
+    "lastmod": "2026-04-18",
+    "author": "Satyam Thakur",
+    "description": "A hands-on walkthrough to deploy a secure and scalable 9-EC2 private network across 3 AWS regions and Availability Zones using custom VPCs and VPC Peering.",
+    "path": "content/articles/2026-04-19_AWS-Multi-AZ-Multi-Region-Network.md",
+    "html_path": "content/articles/2026-04-19_AWS-Multi-AZ-Multi-Region-Network.html",
+    "tags": [
+      "AWS",
+      "VPC",
+      "VPC Peering",
+      "EC2",
+      "Cloud Networking",
+      "Multi-Region"
+    ],
+    "categories": [
+      "Cloud",
+      "Networking"
+    ],
+    "draft": false,
+    "canonical_url": "",
+    "toc": true,
+    "toc_sticky": true,
+    "toc_label": "Table of Contents",
+    "views": true,
+    "link": false,
+    "url": ""
+  }
+]
