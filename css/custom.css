@@ -171,10 +171,6 @@ a{color:var(--link-primary)}
 #navbar-main .navbar-brand,
 #navbar-main .nav-link{color:var(--text) !important}
 #navbar-main .nav-link:hover{color:#93c5fd !important}
-.topmate-link{animation:topmate-flash 1.5s ease-in-out infinite}
-.topmate-link span{background:linear-gradient(135deg,rgba(255,255,255,0.85),rgba(255,255,255,0.65));padding:2px 8px;border-radius:20px;color:#1e293b !important}
-body:not(.dark) .topmate-link span{background:linear-gradient(135deg,rgba(248,250,252,0.95),rgba(241,245,249,0.9));color:#1e293b !important}
-@keyframes topmate-flash{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* Light mode navbar */
 body:not(.dark) #navbar-main.navbar {
@@ -214,6 +210,9 @@ section#about .home-section-bg{background:linear-gradient(0deg, #272935 0%, #272
 #profile .portrait-title h3{color:#cbd5e1;font-weight:500}
 .network-icon .big-icon{color:#94a3b8}
 .network-icon a:hover .big-icon{color:#93c5fd}
+/* Inline-SVG brand marks (Substack, Linktree) sized to match the icon font */
+.network-icon svg.big-icon{width:1.5rem;height:1.5rem;vertical-align:-.15em}
+.network-icon{gap:.25rem 0;row-gap:.5rem}
 
 /* Light mode hero section */
 body:not(.dark) section#about .home-section-bg {
@@ -871,6 +870,77 @@ body:not(.dark) #section-publications {
 
 body:not(.dark) #section-contact {
   background-color: var(--bg);
+}
+
+/* Shared footer: social icon row (js/footer.js) */
+.site-footer #footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .85rem;
+}
+.social-icons-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.social-icons-list a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, .25);
+  color: #94a3b8;
+  font-size: 1.05rem;
+  transition: color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.social-icons-list a:hover {
+  color: #93c5fd;
+  border-color: rgba(147, 197, 253, .55);
+  transform: translateY(-2px);
+}
+/* Inline SVG marks inherit the link colour; the Topmate logo keeps its own */
+.social-icons-list svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.social-icons-list img {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+.site-footer #footer-content .powered-by {
+  margin: 0;
+  font-size: .85rem;
+}
+/* Topmate logo standing in for an icon-font glyph in the contact list.
+   .fa-li is absolutely positioned and an img has no baseline behaviour of its
+   own, so give the box the height of one text line and centre the logo in it,
+   then settle it onto the text rather than the line box centre. Do NOT set
+   line-height here: `1lh` resolves against this element's own line-height, so
+   `line-height:1` would collapse the box to 1em and ride the icon up. */
+.contact-topmate-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.5em;
+  height: 1lh;
+  top: .16em;
+}
+.contact-topmate-icon img {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+body:not(.dark) .social-icons-list a {
+  color: var(--text-muted);
+}
+body:not(.dark) .social-icons-list a:hover {
+  color: var(--link-primary);
 }
 
 /* Light mode containers and rows */

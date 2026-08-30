@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,400i,700,700i&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="css/wowchemy.32e2e32cf1a4c1ea152e519f8b1fda79.css">
-  <link rel="stylesheet" href="css/custom.css?v=5">
+  <link rel="stylesheet" href="css/custom.css?v=16">
   <script>
     // Theme detection and synchronization
     document.addEventListener('DOMContentLoaded', function() {
@@ -167,11 +167,13 @@
                   <iframe src="https://github.com/satyam-thakur/LLM-Assisted-Container-Security-Analysis" title="ReVEX (ReAct for Vulnerability Exploitability eXchange)" frameborder="0" loading="lazy"></iframe>
                 </div>
                 <div class="project-details">
-                  <h3>ReVEX (ReAct for Vulnerability Exploitability eXchange)</h3>
+                  <h3>ReVEX: DSPy-Optimized ReAct Agents for Exploitability Verification of Container Vulnerabilities</h3>
                   <p>
                     <em>DSPy-optimized ReAct agent framework for exploitability verification of container vulnerabilities.</em>
                     Software Composition Analysis (SCA) scanners frequently produce false positives, creating noise that hinders timely remediation. ReVEX addresses this problem by automating vulnerability verification through a DSPy-optimized ReAct agent that determines whether a reported CVE is truly exploitable within a given container image. The agent integrates NVD intelligence, SBOM verification, and code reachability analysis to produce a VEX-aligned exploitability assessment (affected or not_affected).
                   </p>
+                  <a href="https://doi.org/10.5281/zenodo.20839301" target="_blank" class="btn btn-outline-primary">Zenodo</a>
+                  <span class="footer-separator">·</span>
                   <a href="https://github.com/satyam-thakur/ReVEX/tree/main" target="_blank" class="btn btn-outline-primary">GitHub</a>
                   <span class="footer-separator">·</span>
                   <a href="https://drive.google.com/file/d/13AKwJiYM0_XbeFkJwgucqJoPgdWvORFq/view" target="_blank" class="btn btn-outline-primary">Poster</a>
@@ -333,21 +335,8 @@
     <footer class="page-footer">
       <div class="container">
         <div class="site-footer">
-          <p class="powered-by copyright-license-text">
-            © 2025 Satyam Thakur
-          </p>
-          <p class="powered-by">
-            Network Development Engineer
-          </p>
-          <p class="powered-by">
-            <a href="https://www.linkedin.com/in/satyam-thakur-6265b4197/" target="_blank" rel="noopener">LinkedIn</a>
-            ·
-            <a href="https://github.com/satyam-thakur" target="_blank" rel="noopener">GitHub</a>
-            ·
-            <a href="projects.html">Portfolio</a>
-            ·
-            <a href="mailto:infothakur999@gmail.com">Email</a>
-          </p>
+          <div id="footer-content"></div>
+          <script src="js/footer.js"></script>
         </div>
       </div>
     </footer>
